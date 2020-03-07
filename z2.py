@@ -1,7 +1,7 @@
 import os
 f1=open("data1.asm")
-os.remove("coded1.mc")
-f2=open("coded1.mc","x")
+os.remove("coded.mc")
+f2=open("coded.mc","x")
 lines=f1.readlines()
 count1=0
 for line in lines:
