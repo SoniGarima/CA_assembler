@@ -1,0 +1,2 @@
+lui x1,0xDEAD
+auipc x4,0x10
