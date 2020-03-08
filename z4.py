@@ -27,6 +27,7 @@ for line in lines:
                 count2=(count2-count1)-1
             else:
                 count2=(count2-count1)
+            print(count2)
             imm0=4*count2
             if(imm0>=0):
                 imm=str(bin(imm0)[2:].zfill(20)) 
