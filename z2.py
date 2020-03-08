@@ -9,8 +9,12 @@ for line in lines:
         continue
     elif(line!=" "):
         count1=count1+1
-        string=line.split()
-        if (string[0]=="beq" or string[0]=="bge" or string[0]=="blt" or string[0]=="bne"):
+        line=line.replace(" ","")
+        if (line.startswith("beq") or line.startswith("bge") or line.startswith("blt") or line.startswith("bne")):
+            string=line[:3]+" "+line[3:]
+            len1=len(string)
+            string=string[:(len1-1)]
+            string=string.split(" ")
             k1,k2,k3=string[1].split(",")
             h1=str(bin(int(k1[1],10))[2:].zfill(5))
             h2=str(bin(int(k2[1],10))[2:].zfill(5))
@@ -62,14 +66,22 @@ for line in lines:
             mac_codet=imm1+h2+h1+func3+imm2+opcode
             mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
             f2.write("0x"+mac_code+"\n")
-        elif(string[0]=="lui" or string[0]=="auipc"):
-            k1,k2=string[1].split(",")
-            h1=str(bin(int(k1[1],10))[2:].zfill(5))
-            if(string[0]=="lui"):
+        elif(line.startswith("lui") or line.startswith("auipc")):
+            if(line.startswith("lui")):
+                string=line[:3]+" "+line[3:]
+                len1=len(string)
+                string=string[:(len1-1)]
+                string=string.split(" ")
+
+                k1,k2=string[1].split(",")
+                h1=str(bin(int(k1[1],10))[2:].zfill(5))
                 opcode="0110111"
+                
                 if(k2.startswith("0x")):
                     x2=k2[2:]
+                    
                     x2=x2.lower()
+                    
                     length=len(x2)
                     string1=""
                     if(length<5):
@@ -77,6 +89,7 @@ for line in lines:
                         for i in range(a):
                             string1=string1+"0"
                     h2=string1+x2
+                    
                     mac_codet=h1+opcode
                     mac_code=str(hex(int(mac_codet,2))[2:].zfill(3))
                     mac_code=h2+mac_code
@@ -85,6 +98,12 @@ for line in lines:
                     mac_codet=h2+h1+opcode
                     mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
             else:
+                string=line[:5]+" "+line[5:]
+                len1=len(string)
+                string=string[:(len1-1)]
+                string=string.split(" ")
+                k1,k2=string[1].split(",")
+                h1=str(bin(int(k1[1],10))[2:].zfill(5))
                 opcode="0010111"
                 if(k2.startswith("0x")):
                     h2=str(bin(int(k2, 16))[2:].zfill(20))
@@ -93,7 +112,11 @@ for line in lines:
                 mac_codet=h2+h1+opcode
                 mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
             f2.write("0x"+mac_code+"\n")
-        elif(string[0]=="jal"):
+        elif(line.startswith("jal")):
+            string=line[:3]+" "+line[3:]
+            len1=len(string)
+            string=string[:(len1-1)]
+            string=string.split(" ")
             k1,k2=string[1].split(",")
             h1=str(bin(int(k1[1],10))[2:].zfill(5))
             st=":"
