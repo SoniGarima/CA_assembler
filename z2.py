@@ -10,38 +10,36 @@ for line in lines:
     elif(line!=" "):
         count1=count1+1
         line=line.replace(" ","")
-        if (line.startswith("beq") or line.startswith("bge") or line.startswith("blt") or line.startswith("bne")):
-            string=line[:3]+" "+line[3:]
+        if (line.__contains__("beq") or line.__contains__("bge") or line.__contains__("blt") or line.__contains__("bne")):
+            if "beq" in line:
+                sa1="beq"
+            elif "bge" in line:
+                sa1="bge"
+            elif "blt" in line:
+                sa1="blt"
+            else:
+                sa1="bne"
+            string=line.split(sa1)
+            string=string[1]
             len1=len(string)
             string=string[:(len1-1)]
-            string=string.split(" ")
-            k1,k2,k3=string[1].split(",")
+            k1,k2,k3=string.split(",")
             h1=str(bin(int(k1[1],10))[2:].zfill(5))
             h2=str(bin(int(k2[1],10))[2:].zfill(5))
-            st=":"
-            kd=k3+st
             count2=0
             for j in lines:
                 string1=j.split()
                 if(j!=" "):
-                    count2=count2+1
-                if(string1[0].startswith(kd)):
-                    break
-            if(count2>count1):
-                count2=(count2-count1)-1
-            else:
-                count3=0
-                count4=0
-                for k in lines:
-                    string1=k.split()
-                    if(k!=" "):
-                        count3=count3+1
-                    if(count3>(count2-1) and count3<count1):
-                        if(k.endswith(":") and string1[0]!=kd):
+                    if(j.endswith(":")):
+                        if k3 not in j:
                             continue
-                        else:
-                            count4=count4+1
-                count2=(-1*count4)+1
+                    else:
+                        count2=count2+1
+                if(string1[0].__contains__(":")):
+                    string2=string1[0].split(":")
+                    if(string2[0]==k3):
+                        break
+            count2=count2-count1
             imm0=4*count2
             if(imm0>=0):
                 imm=str(bin(imm0)[2:].zfill(12)) 
@@ -54,11 +52,11 @@ for line in lines:
                 imm=str(bin(int(imm0,10))[2:].zfill(12)) 
             imm1=imm[:7]
             imm2=imm[7:]
-            if(string[0]=="beq"):
+            if(line.__contains__("beq")):
                 func3="000"
-            elif(string[0]=="bne"):
+            elif(line.__contains__("bne")):
                 func3="001"
-            elif(string[0]=="blt"):
+            elif "blt" in line:
                 func3="100"
             else:
                 func3="101"
@@ -66,22 +64,18 @@ for line in lines:
             mac_codet=imm1+h2+h1+func3+imm2+opcode
             mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
             f2.write("0x"+mac_code+"\n")
-        elif(line.startswith("lui") or line.startswith("auipc")):
-            if(line.startswith("lui")):
-                string=line[:3]+" "+line[3:]
+        elif(line.__contains__("lui") or line.__contains__("auipc")):
+            if(line.__contains__("lui")):
+                string=line.split("lui")
+                string=string[1]
                 len1=len(string)
                 string=string[:(len1-1)]
-                string=string.split(" ")
-
-                k1,k2=string[1].split(",")
+                k1,k2=string.split(",")
                 h1=str(bin(int(k1[1],10))[2:].zfill(5))
                 opcode="0110111"
-                
                 if(k2.startswith("0x")):
                     x2=k2[2:]
-                    
                     x2=x2.lower()
-                    
                     length=len(x2)
                     string1=""
                     if(length<5):
@@ -98,11 +92,11 @@ for line in lines:
                     mac_codet=h2+h1+opcode
                     mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
             else:
-                string=line[:5]+" "+line[5:]
+                string=line.split("auipc")
+                string=string[1]
                 len1=len(string)
                 string=string[:(len1-1)]
-                string=string.split(" ")
-                k1,k2=string[1].split(",")
+                k1,k2=string.split(",")
                 h1=str(bin(int(k1[1],10))[2:].zfill(5))
                 opcode="0010111"
                 if(k2.startswith("0x")):
@@ -112,38 +106,27 @@ for line in lines:
                 mac_codet=h2+h1+opcode
                 mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
             f2.write("0x"+mac_code+"\n")
-        elif(line.startswith("jal")):
-            string=line[:3]+" "+line[3:]
+        elif(line.__contains__("jal")):
+            string=line.split("jal")
+            string=string[1]
             len1=len(string)
             string=string[:(len1-1)]
-            string=string.split(" ")
-            k1,k2=string[1].split(",")
+            k1,k2=string.split(",")
             h1=str(bin(int(k1[1],10))[2:].zfill(5))
-            st=":"
-            kd=k2+st
             count2=0
             for l in lines:
                 string1=l.split()
                 if(l!=" "):
-                    count2=count2+1
-                if(string1[0]==kd):
-                    count2=count2+1
-                    break
-            if(count2<count1):
-                count3=0
-                count4=0
-                for m in lines:
-                    string1=m.split()
-                    if(j!=" "):
-                        count3=count3+1
-                    if(count3>(count2-1) and count3<count1):
-                        if(m.endswith(":") and string1[0]!=kd):
+                    if(l.endswith(":")):
+                        if k3 not in l:
                             continue
-                        else:
-                            count4=count4+1
-                count2=(-1*count4)+1
-            else:
-                count2=(count2-count1)-1
+                    else:
+                        count2=count2+1
+                if(string1[0].__contains__(":")):
+                    string2=string1[0].split(":")
+                    if(string2[0]==k2):
+                        break
+            count2=count2-count1
             imm0=4*count2
             if(imm0>=0):
                 imm=str(bin(imm0)[2:].zfill(20)) 
