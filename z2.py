@@ -10,6 +10,7 @@ for line in lines:
     elif(line!=" "):
         count1=count1+1
         line=line.replace(" ","")
+        line=line.replace("\n","")
         if (line.__contains__("beq") or line.__contains__("bge") or line.__contains__("blt") or line.__contains__("bne")):
             if "beq" in line:
                 sa1="beq"
@@ -21,8 +22,6 @@ for line in lines:
                 sa1="bne"
             string=line.split(sa1)
             string=string[1]
-            len1=len(string)
-            string=string[:(len1-1)]
             k1,k2,k3=string.split(",")
             h1=str(bin(int(k1[1],10))[2:].zfill(5))
             h2=str(bin(int(k2[1],10))[2:].zfill(5))
@@ -30,7 +29,7 @@ for line in lines:
             for j in lines:
                 string1=j.split()
                 if(j!=" "):
-                    if(j.endswith(":")):
+                    if(j.endswith(':')):
                         if k3 not in j:
                             continue
                     else:
@@ -39,8 +38,39 @@ for line in lines:
                     string2=string1[0].split(":")
                     if(string2[0]==k3):
                         break
-            count2=count2-count1
+            count4=0
+            count3=0
+            if(count2<count1):
+                for t in lines:
+                    if(t!=" "):
+                        count3=count3+1
+                        if(count3>=count2):
+                            if(t.__contains__(":")):
+                                string4=t.split(":")
+                                if(string4[0]!=k3 and string4[1]=="\n"):
+                                    count4=count4+1
+                                if(string4[0]==k3 and string4[1]=="\n"):
+                                    count4=count4+1
+                    if(count3==count1):
+                        countx=count1-count4
+                        count2=count2-countx
+                        break
+            else:
+                for t in lines:
+                    if(t!=" "):
+                        count3=count3+1
+                        if(count3>count1):
+                            if(t.__contains__(":")):
+                                string4=t.split(":")
+                                if(string4[0]!=k3 and string4[1]=="\n"):
+                                    count4=count4+1
+                    if(count3==count2):
+                        countx=count2-count4
+                        count2=countx-count1
+                        break
+          
             imm0=4*count2
+           
             if(imm0>=0):
                 imm=str(bin(imm0)[2:].zfill(12)) 
             else:  
@@ -68,8 +98,6 @@ for line in lines:
             if(line.__contains__("lui")):
                 string=line.split("lui")
                 string=string[1]
-                len1=len(string)
-                string=string[:(len1-1)]
                 k1,k2=string.split(",")
                 h1=str(bin(int(k1[1],10))[2:].zfill(5))
                 opcode="0110111"
@@ -83,7 +111,6 @@ for line in lines:
                         for i in range(a):
                             string1=string1+"0"
                     h2=string1+x2
-                    
                     mac_codet=h1+opcode
                     mac_code=str(hex(int(mac_codet,2))[2:].zfill(3))
                     mac_code=h2+mac_code
@@ -94,23 +121,31 @@ for line in lines:
             else:
                 string=line.split("auipc")
                 string=string[1]
-                len1=len(string)
-                string=string[:(len1-1)]
+               
                 k1,k2=string.split(",")
                 h1=str(bin(int(k1[1],10))[2:].zfill(5))
                 opcode="0010111"
                 if(k2.startswith("0x")):
-                    h2=str(bin(int(k2, 16))[2:].zfill(20))
+                    x2=k2[2:]
+                    length=len(x2)
+                    string1=""
+                    if(length<5):
+                        a=5-length
+                        for i in range(a):
+                            string1=string1+"0"
+                    h2=string1+x2
+                 
+                    mac_codet=h1+opcode
+                    mac_code=str(hex(int(mac_codet,2))[2:].zfill(3))
+                    mac_code=h2+mac_code
                 else:
                     h2=str(bin(int(k2,10))[2:].zfill(20)) 
-                mac_codet=h2+h1+opcode
-                mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
+                    mac_codet=h2+h1+opcode
+                    mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
             f2.write("0x"+mac_code+"\n")
         elif(line.__contains__("jal")):
             string=line.split("jal")
             string=string[1]
-            len1=len(string)
-            string=string[:(len1-1)]
             k1,k2=string.split(",")
             h1=str(bin(int(k1[1],10))[2:].zfill(5))
             count2=0
@@ -126,8 +161,39 @@ for line in lines:
                     string2=string1[0].split(":")
                     if(string2[0]==k2):
                         break
-            count2=count2-count1
+            count4=0
+            count3=0
+            if(count2<count1):
+                for t in lines:
+                    if(t!=" "):
+                        count3=count3+1
+                        if(count3>=count2):
+                            if(t.__contains__(":")):
+                                string4=t.split(":")
+                                if(string4[0]!=k2 and string4[1]=="\n"):
+                                    count4=count4+1
+                                if(string4[0]==k2 and string4[1]=="\n"):
+                                    count4=count4+1
+                    if(count3==count1):
+                        countx=count1-count4
+                        count2=count2-countx
+                        break
+            else:
+                for t in lines:
+                    if(t!=" "):
+                        count3=count3+1
+                        if(count3>count1):
+                            if(t.__contains__(":")):
+                                string4=t.split(":")
+                                if(string4[0]!=k2 and string4[1]=="\n"):
+                                    count4=count4+1
+                    if(count3==count2):
+                        countx=count2-count4
+                        count2=countx-count1
+                        break
+            
             imm0=4*count2
+        
             if(imm0>=0):
                 imm=str(bin(imm0)[2:].zfill(20)) 
             else:  
@@ -143,3 +209,4 @@ for line in lines:
             mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
             f2.write("0x"+mac_code+"\n")
             
+
