@@ -215,21 +215,245 @@ for line in lines:
                 mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
                 f2.write("0x"+mac_code+"\n")
             if(line.__contains__("slt")):
-                h=line.find("010")
+                h=line.find("slt")
                 [k1,k2,k3]=line[h+3:].strip().split()
                 h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                 h2=str(bin(int(k2[1],10))[2:]).zfill(5)
                 h1=str(bin(int(k3[1],10))[2:]).zfill(5)
                 opc="0110011"
-                fun3="000"
+                fun3="010"
                 fun7="0000000"
                 mac_codet=fun7+h1+h2+fun3+h3+opc
                 mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
                 f2.write("0x"+mac_code+"\n")
+        elif(line.__contains__("addi") or line.__contains__("andi") or line.__contains__("ori")):
+            if(line.find("addi")):
+                h=line.find("addi")
+            elif(line.find("andi")):
+                h=line.find("andi")
+            else:
+                h=line.find("ori")        
+            [k1,k2,k3]=line[h+3:].strip().split()
+            h1=str(bin(int(k1[1],10))[2:].zfill(5))
+            h2=str(bin(int(k2[1],10))[2:].zfill(5))
+            if(int(k3)>0):
+                if(k3.startswith("0x")):
+                    h3=str(bin(int(k3, 16))[2:].zfill(12))
+                else:    
+                    h3=str(bin(int(k3,10))[2:].zfill(12)) 
+            elif(int(k3)<0):
+                if(k3.startswith("0x")):
+                    h3=str(bin(int(k3, 16))[3:].zfill(12))
+                else:    
+                    h3=str(bin(int(k3,10))[3:].zfill(12)) 
+                k3=int(h3,2)
+                k3=2**12-k3; 
+                k3=str(k3)    
+                h3=str(bin(int(k3,10))[2:].zfill(12))               
+            if(string=="addi"):
+                func3="000"
+            elif( string=="andi"):
+                func3="111"
+            else:
+                func3="110" 
+            opc="0010011"      
+            mac_codet=h3+h2+func3+h1+opc
+            mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
+            f2.write("0x"+mac_code+"\n")    
+        
+        elif(line.__contains__("sb") or line.__contains__("sh") or line.__contains__("sd") or line.__contains__("sw")):
+            if(line.__contains__("sb")):
+                y=line.find("sb")
+                y1=line.find("(")
+                y2=line.find(")")
+                j1=line[y+2:y1]
+                if(line.find(",")>=0):
+                    [k1,k3]=j1.split(",")
+                    k1=k1.strip()
+                    k3=k3.strip()
+                else:
+                    [k1,k3]=j1.split()
+                    k1=k1.strip()
+                    k3=k3.strip()    
+                k2=line[y1+1:y2].strip()
+                h1=str(bin(int(k1[1],10))[2:].zfill(5)) 
+                h2= str(bin(int(k2[1],10))[2:].zfill(5)) 
+                if(int(k3)>=0):
+                    if(k3.startswith("0x")):
+                        h3=str(bin(int(k3, 16))[2:].zfill(12))
+                    else:    
+                        h3=str(bin(int(k3,10))[2:].zfill(12)) 
+                elif(int(k3)<0):
+                    if(k3.startswith("0x")):
+                        h3=str(bin(int(k3, 16))[3:].zfill(12))
+                    else:    
+                        h3=str(bin(int(k3,10))[3:].zfill(12)) 
+                    k3=int(h3,2)
+                    k3=2**12-k3 
+                    k3=str(k3)    
+                    h3=str(bin(int(k3,10))[2:].zfill(12)) 
+                func3="000"
+                opc="0100011"
+                mac_codet=h3[0:7]+h1+h2+func3+h3[7:]+opc
+                mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
+                f2.write("0x"+mac_code+"\n") 
             
+            if(line.__contains__("sw")):
+                y=line.find("sw")
+                y1=line.find("(")
+                y2=line.find(")")
+                j1=line[y+2:y1]
+                if(line.find(",")>=0):
+                    [k1,k3]=j1.split(",")
+                    k1=k1.strip()
+                    k3=k3.strip()
+                else:
+                    [k1,k3]=j1.split()
+                    k1=k1.strip()
+                    k3=k3.strip()    
+                k2=line[y1+1:y2].strip()
+                h1=str(bin(int(k1[1],10))[2:].zfill(5)) 
+                h2= str(bin(int(k2[1],10))[2:].zfill(5)) 
+                if(int(k3)>=0):
+                    if(k3.startswith("0x")):
+                        h3=str(bin(int(k3, 16))[2:].zfill(12))
+                    else:    
+                        h3=str(bin(int(k3,10))[2:].zfill(12)) 
+                elif(int(k3)<0):
+                    if(k3.startswith("0x")):
+                        h3=str(bin(int(k3, 16))[3:].zfill(12))
+                    else:    
+                        h3=str(bin(int(k3,10))[3:].zfill(12)) 
+                    k3=int(h3,2)
+                    k3=2**12-k3 
+                    k3=str(k3)    
+                    h3=str(bin(int(k3,10))[2:].zfill(12)) 
+                func3="010"
+                opc="0100011"
+                mac_codet=h3[0:7]+h1+h2+func3+h3[7:]+opc
+                mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
+                f2.write("0x"+mac_code+"\n")     
             
+            if(line.__contains__("sd")):
+                y=line.find("sd")
+                y1=line.find("(")
+                y2=line.find(")")
+                j1=line[y+2:y1]
+                if(line.find(",")>=0):
+                    [k1,k3]=j1.split(",")
+                    k1=k1.strip()
+                    k3=k3.strip()
+                else:
+                    [k1,k3]=j1.split()
+                    k1=k1.strip()
+                    k3=k3.strip()    
+                k2=line[y1+1:y2].strip()
+                h1=str(bin(int(k1[1],10))[2:].zfill(5)) 
+                h2= str(bin(int(k2[1],10))[2:].zfill(5)) 
+                if(int(k3)>=0):
+                    if(k3.startswith("0x")):
+                        h3=str(bin(int(k3, 16))[2:].zfill(12))
+                    else:    
+                        h3=str(bin(int(k3,10))[2:].zfill(12)) 
+                elif(int(k3)<0):
+                    if(k3.startswith("0x")):
+                        h3=str(bin(int(k3, 16))[3:].zfill(12))
+                    else:    
+                        h3=str(bin(int(k3,10))[3:].zfill(12)) 
+                    k3=int(h3,2)
+                    k3=2**12-k3 
+                    k3=str(k3)    
+                    h3=str(bin(int(k3,10))[2:].zfill(12)) 
+                func3="011"
+                opc="0100011"
+                mac_codet=h3[0:7]+h1+h2+func3+h3[7:]+opc
+                mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
+                f2.write("0x"+mac_code+"\n")     
             
-            
+            if(line.__contains__("sh")):
+                y=line.find("sh")
+                y1=line.find("(")
+                y2=line.find(")")
+                j1=line[y+2:y1]
+                if(line.find(",")>=0):
+                    [k1,k3]=j1.split(",")
+                    k1=k1.strip()
+                    k3=k3.strip()
+                else:
+                    [k1,k3]=j1.split()
+                    k1=k1.strip()
+                    k3=k3.strip()    
+                k2=line[y1+1:y2].strip()
+                h1=str(bin(int(k1[1],10))[2:].zfill(5)) 
+                h2= str(bin(int(k2[1],10))[2:].zfill(5)) 
+                if(int(k3)>=0):
+                    if(k3.startswith("0x")):
+                        h3=str(bin(int(k3, 16))[2:].zfill(12))
+                    else:    
+                        h3=str(bin(int(k3,10))[2:].zfill(12)) 
+                elif(int(k3)<0):
+                    if(k3.startswith("0x")):
+                        h3=str(bin(int(k3, 16))[3:].zfill(12))
+                    else:    
+                        h3=str(bin(int(k3,10))[3:].zfill(12)) 
+                    k3=int(h3,2)
+                    k3=2**12-k3 
+                    k3=str(k3)    
+                    h3=str(bin(int(k3,10))[2:].zfill(12)) 
+                func3="000"
+                opc="1100111"
+                mac_codet=h3[0:7]+h1+h2+func3+h3[7:]+opc
+                mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
+                f2.write("0x"+mac_code+"\n")     
+                
+        elif(line.__contains__("jalr") or line.__contains__("lb") or line.__contains__("lw") or line.__contains__("ld") or line.__contains__("lh")):
+            if(line.__contains__("jalr")):
+                y=line.find("jalr")
+                y1=line.find("(")
+                y2=line.find(")")
+                j1=line[y+4:y1]
+                if(line.find(",")>=0):
+                    [k1,k3]=j1.split(",")
+                    k1=k1.strip()
+                    k3=k3.strip()
+                else:
+                    [k1,k3]=j1.split()
+                    k1=k1.strip()
+                    k3=k3.strip()    
+                k2=line[y1+1:y2].strip()
+                h1=str(bin(int(k1[1],10))[2:].zfill(5)) 
+                h2= str(bin(int(k2[1],10))[2:].zfill(5)) 
+                if(int(k3)>=0):
+                    if(k3.startswith("0x")):
+                        h3=str(bin(int(k3, 16))[2:].zfill(12))
+                    else:    
+                        h3=str(bin(int(k3,10))[2:].zfill(12)) 
+                elif(int(k3)<0):
+                    if(k3.startswith("0x")):
+                        h3=str(bin(int(k3, 16))[3:].zfill(12))
+                    else:    
+                        h3=str(bin(int(k3,10))[3:].zfill(12)) 
+                k3=int(h3,2)
+                k3=2**12-k3; 
+                k3=str(k3)    
+                h3=str(bin(int(k3,10))[2:].zfill(12))     
+                func3="000"
+                opcode="1100111"
+                mac_codet=h3+h2+func3+h1+opcode
+                mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
+                f2.write("0x"+mac_code+"\n")
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                    
+        
 
 
 
