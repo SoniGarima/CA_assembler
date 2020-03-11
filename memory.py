@@ -13,7 +13,7 @@ class memory:
 
     def ret_byte(self,address):
         if address in self.memory:
-            return self.memory[address]
+            return bin(self.memory[address])[2:].zfill(8)
         else:
             return "00000000"
 
