@@ -6,6 +6,7 @@ class run:
 
     def fetch(self,mc_code):
         IR=mc_code
+	    PC_Temp=PC
         PC+=4
         print("FETCH:Fetch instruction"+IR+" from address "+str(PC))
         decode(IR)
@@ -18,7 +19,7 @@ class run:
             fun3=curr_bin_ins[17:20]
             rs2=curr_bin_ins[7:12]
             rs1=curr_bin_ins[12:17]
-	        rd=curr_bin_ins[20:25]
+            rd=curr_bin_ins[20:25]
             if(fun7=="0100000"):
                 if(fun3=="000"):
                     print("DECODE: Operation is SUB, first operand R"+int(rs1,2)+ " , Second operand R"+int(rs2,2)+", destination register R"+int(rd,2))
@@ -70,66 +71,66 @@ class run:
                         print("DECODE: Operation is SLT, first operand R"+int(rs1,2)+ " , Second operand R"+int(rs2,2)+", destination register R"+int(rd,2))
                         print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", R"+int(rs2,2)+" = "+registers.registers[int(rs2,2)])
                         executeR("SLT",rs1,rs2,rd)
-            elif(opcode=="0010011"):
-                fun3=curr_bin_ins[17:20]
-                rs1=curr_bin_ins[12:17]
-                rd=curr_bin_ins[20:25]
-                imm=curr_bin_ins[0:12]
-                if(fun3=="000"):
-                    print("DECODE: Operation is ADDI, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
-                    print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
-                    executeI("ADDI",rs1,imm,rd)
-                if(fun3=="111"):
-                    print("DECODE: Operation is ANDI, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
-                    print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
-                    executeI("ANDI",rs1,imm,rd)
-                if(fun3=="110"):
-                    print("DECODE: Operation is ORI, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
-                    print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
-                    executeI("ORI",rs1,imm,rd)    
+        elif(opcode=="0010011"):
+            fun3=curr_bin_ins[17:20]
+            rs1=curr_bin_ins[12:17]
+            rd=curr_bin_ins[20:25]
+            imm=curr_bin_ins[0:12]
+            if(fun3=="000"):
+                print("DECODE: Operation is ADDI, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
+                print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
+                executeI("ADDI",rs1,imm,rd)
+            if(fun3=="111"):
+                print("DECODE: Operation is ANDI, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
+                print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
+                executeI("ANDI",rs1,imm,rd)
+            if(fun3=="110"):
+                print("DECODE: Operation is ORI, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
+                print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
+                executeI("ORI",rs1,imm,rd)    
 
-            elif(opcode=="0000011"):
-                fun3=curr_bin_ins[17:20]
-                rs1=curr_bin_ins[12:17]
-                rd=curr_bin_ins[20:25]
-                imm=curr_bin_ins[0:12]
-                if(fun3=="000"):
-                    print("DECODE: Operation is LB, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
-                    print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
-                    executeIL("LB",rs1,imm,rd)    
-                if(fun3=="011"):
-                    print("DECODE: Operation is LD, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
-                    print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
-                    executeIL("LD",rs1,imm,rd)    
-                if(fun3=="001"):
-                    print("DECODE: Operation is LH, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
-                    print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
-                    executeIL("LH",rs1,imm,rd)    
-                if(fun3=="010"):
-                    print("DECODE: Operation is LW, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
-                    print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
-                    executeIL("LW",rs1,imm,rd)                        
-            elif(opcode="1100111"):
-                fun3=curr_bin_ins[17:20]
-                rs1=curr_bin_ins[12:17]
-                rd=curr_bin_ins[20:25]
-                imm=curr_bin_ins[0:12]
-                if(fun3=="000"):
-                    print("DECODE: Operation is JALR, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
-                    print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
-                    executeIL("JALR",rs1,imm,rd) 
-            elif(opcode="0100011"):
-                fun3=curr_bin_ins[17:20]
-                rs1=curr_bin_ins[12:17]
-                rs2=curr_bin_ins[7:12]
-                imm=curr_bin_ins[0:7]+curr_bin_ins[20:25]
-                if(fun3=="010"):
-                    print("DECODE: Operation is SW, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
-                    print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
-                    executeIS("SW",rs1,imm,rd)
+        elif(opcode=="0000011"):
+            fun3=curr_bin_ins[17:20]
+            rs1=curr_bin_ins[12:17]
+            rd=curr_bin_ins[20:25]
+            imm=curr_bin_ins[0:12]
+            if(fun3=="000"):
+                print("DECODE: Operation is LB, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
+                print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
+                executeIL("LB",rs1,imm,rd)    
+            if(fun3=="011"):
+                print("DECODE: Operation is LD, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
+                print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
+                executeIL("LD",rs1,imm,rd)    
+            if(fun3=="001"):
+                print("DECODE: Operation is LH, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
+                print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
+                executeIL("LH",rs1,imm,rd)    
+            if(fun3=="010"):
+                print("DECODE: Operation is LW, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
+                print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
+                executeIL("LW",rs1,imm,rd)                        
+        elif(opcode="1100111"):
+            fun3=curr_bin_ins[17:20]
+            rs1=curr_bin_ins[12:17]
+            rd=curr_bin_ins[20:25]
+            imm=curr_bin_ins[0:12]
+            if(fun3=="000"):
+                print("DECODE: Operation is JALR, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
+                print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
+                executeIL("JALR",rs1,imm,rd) 
+        elif(opcode="0100011"):
+            fun3=curr_bin_ins[17:20]
+            rs1=curr_bin_ins[12:17]
+            rs2=curr_bin_ins[7:12]
+            imm=curr_bin_ins[0:7]+curr_bin_ins[20:25]
+            if(fun3=="010"):
+                print("DECODE: Operation is SW, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
+                print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
+                executeIS("SW",rs1,imm,rd)
                      
                 
-                
+          
 
     def executeR(self,func,r1,r2,r3):
         if(func=="ADD"):
