@@ -6,7 +6,7 @@ class run:
 
     def fetch(self,mc_code):
         IR=mc_code
-	    PC_Temp=PC
+	PC_Temp=PC
         PC+=4
         print("FETCH:Fetch instruction"+IR+" from address "+str(PC))
         decode(IR)
