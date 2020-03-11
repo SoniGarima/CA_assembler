@@ -6,6 +6,7 @@ class run:
 
     def fetch(self,mc_code):
         IR=mc_code
+	PC_Temp=PC
         PC+=4
         print("FETCH:Fetch instruction"+IR+" from address "+str(PC))
         decode(IR)
@@ -127,7 +128,18 @@ class run:
                     print("DECODE: Operation is SW, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
                     print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
                     executeIS("SW",rs1,imm,rd)
-                     
+	
+            elif(opcode=="0010111"or opcode=="0110111"):
+			rd=curr_bin_ins[20:25]
+                        imm=curr_bin_ins[0:25]
+                        if(opcode=="0110111"): 
+				print("DECODE: Operation is LUI, first operand is Immediate field, destination register R"+int(rd,2))
+                                print("DECODE: The immediate value is"+int(imm,2))
+                                executeU("LUI",imm,rd,-1)
+            elif(opcode=="0010111"):
+		print("DECODE: Operation is AUIPC, first operand is Immediate field, destination register R"+int(rd,2))
+                print("DECODE: The immediate value is"+int(imm,2))
+                executeU("LUI",imm,rd,PC_Temp)         
                 
                 
 
@@ -194,6 +206,15 @@ class run:
             num1=registers.registers[int(r1,2)]
             num2=int(r2,2)
             mem_write(num1|num2,r3)
+	
+    def executeU(self,func,im,r,pc_t):
+	if(func=="LUI"):
+		im_=(hex(int(im,2))[2:0]).zfill(5)+"000"
+                reg_update(im_,r)
+        elif(fun=="AUIPC"):
+		im_=(hex(int(im,2))[2:0]).zfill(5)+"000"
+		im_=im_+pc_t
+                reg_update(im_,r)	
 
      def executeIL(self,func,r1,r2,r3):
 
