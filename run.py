@@ -130,16 +130,16 @@ class run:
                     executeIS("SW",rs1,imm,rd)
 	
             elif(opcode=="0010111"or opcode=="0110111"):
-			rd=curr_bin_ins[20:25]
-                        imm=curr_bin_ins[0:25]
-                        if(opcode=="0110111"): 
-				print("DECODE: Operation is LUI, first operand is Immediate field, destination register R"+int(rd,2))
-                                print("DECODE: The immediate value is"+int(imm,2))
-                                executeU("LUI",imm,rd,-1)
-                        elif(opcode=="0010111"):
-				print("DECODE: Operation is AUIPC, first operand is Immediate field, destination register R"+int(rd,2))
-                                print("DECODE: The immediate value is"+int(imm,2))
-                                executeU("AUIPC",imm,rd,PC_Temp)         
+		rd=curr_bin_ins[20:25]
+                imm=curr_bin_ins[0:25]
+                if(opcode=="0110111"):
+	            print("DECODE: Operation is LUI, first operand is Immediate field, destination register R"+int(rd,2))
+                    print("DECODE: The immediate value is"+int(imm,2))
+                    executeU("LUI",imm,rd,-1)
+                elif(opcode=="0010111"):
+		    print("DECODE: Operation is AUIPC, first operand is Immediate field, destination register R"+int(rd,2))
+                    print("DECODE: The immediate value is"+int(imm,2))
+                    executeU("AUIPC",imm,rd,PC_Temp)         
                 
                 
 
@@ -207,16 +207,16 @@ class run:
             num2=int(r2,2)
             mem_write(num1|num2,r3)
 	
-   def executeU(self,func,im,r,pc_t):
+    def executeU(self,func,im,r,pc_t):
 	if(func=="LUI"):
-		im_=(hex(int(im,2))[2:0]).zfill(5)+"000"
-		reg_update(im_,r)
+	    im_=(hex(int(im,2))[2:0]).zfill(5)+"000"
+	    reg_update(im_,r)
 	elif(fun=="AUIPC"):
-		im_=(hex(int(im,2))[2:0]).zfill(5)+"000"
-		im_=im_+pc_t
-		reg_update(im_,r)	
+	    im_=(hex(int(im,2))[2:0]).zfill(5)+"000"
+	    im_=im_+pc_t
+	    reg_update(im_,r)	
 
-     def executeIL(self,func,r1,r2,r3):
+  def executeIL(self,func,r1,r2,r3):
 
 
 
