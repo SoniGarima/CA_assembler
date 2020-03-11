@@ -139,7 +139,7 @@ class run:
                         elif(opcode=="0010111"):
 				print("DECODE: Operation is AUIPC, first operand is Immediate field, destination register R"+int(rd,2))
                                 print("DECODE: The immediate value is"+int(imm,2))
-                                executeU("LUI",imm,rd,PC_Temp)         
+                                executeU("AUIPC",imm,rd,PC_Temp)         
                 
                 
 
