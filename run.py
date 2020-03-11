@@ -138,11 +138,29 @@ class run:
                 print("DECODE: Operation is LUI, first operand is Immediate field, destination register R"+int(rd,2))
                 print("DECODE: The immediate value is"+int(imm,2))
                 executeU("LUI",imm,rd,-1)
-        elif(opcode=="0010111"):
-            print("DECODE: Operation is AUIPC, first operand is Immediate field, destination register R"+int(rd,2))
-            print("DECODE: The immediate value is"+int(imm,2))
-            executeU("AUIPC",imm,rd,PC_Temp)  
-                   
+            elif(opcode=="0010111"):
+		print("DECODE: Operation is AUIPC, first operand is Immediate field, destination register R"+int(rd,2))
+                print("DECODE: The immediate value is"+int(imm,2))
+                executeU("AUIPC",imm,rd,PC_Temp)  
+        elif(opcode=="1101111"):
+		rd=curr_bin_ins[20:25]
+                imm=curr_bin_ins[0:25]
+                imm0=imm[0]
+                imm1=imm[1:11]
+                imm2=imm[11]
+                imm3=imm[12:20]
+                imm_=imm1+imm2+imm3+imm4
+                print("DECODE: Operation is JAL,the first operand is Immediate field, destination register R",int(rd,2))
+                print("DECODE: The immediate value is",int(imm_,2))
+                executeUj("JAL",imm_,rd,PC_Temp)
+    
+    def executeUj(self,func,im,r,pc_t):
+	if(func=="JAL"):
+		pc_t=pc_t[2:]
+                pc_temp=hex(int(pc_t,16))
+                pc_temp+=4
+                PC+=im
+                reg_update((pc_temp),r)             
                 
     def executeR(self,func,r1,r2,r3):
         if(func=="ADD"):
