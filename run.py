@@ -128,10 +128,27 @@ class run:
                 print("DECODE: Operation is SW, first operand R"+int(rs1,2)+ " , Second operand is Immediate field, destination register R"+int(rd,2))
                 print("DECODE: Read registers R"+int(rs1,2)+" = "+registers.registers[int(rs1,2)]+", The immediate value is "+int(imm,2) )
                 executeIS("SW",rs1,imm,rd)
-                     
-                
-          
-
+                             
+        elif(opcode=="0010111"or opcode=="0110111"):
+		rd=curr_bin_ins[20:25]
+		imm=curr_bin_ins[0:25]
+                if(opcode=="0110111"):
+			print("DECODE: Operation is LUI, first operand is Immediate field, destination register R",int(rd,2))
+                        print("DECODE: The immediate value is",int(imm,2))
+                        executeU("LUI",imm,rd,-1)
+		elif(opcode=="0010111"):
+			print("DECODE: Operation is AUIPC, first operand is Immediate field, destination register R",int(rd,2))
+			print("DECODE: The immediate value is",int(imm,2))
+                        executeU("AUIPC",imm,rd,PC_Temp)  
+    def executeU(self,func,im,r,pc_t):
+    	if(func=="LUI"):
+		im_=(hex(int(im,2))[2:0]).zfill(5)+"000"
+                 reg_update(im_,r)
+        elif(fun=="AUIPC"):
+		im_=(hex(int(im,2))[2:0]).zfill(5)+"000"
+                pc_t=pc_t[2:]
+                im_=im_+pc_t
+                reg_update(im_,r) 
     def executeR(self,func,r1,r2,r3):
         if(func=="ADD"):
             num1=registers.registers[int(r1,2)]
