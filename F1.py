@@ -1,10 +1,13 @@
 import os
-from memory import memory
+# from memory import memory
 f1=open("data.asm","r")
 os.remove("coded.mc")
 f2=open("coded.mc","x")
+os.remove("my_memory.py")
+f3=open("my_memory.py","x")
 lines=f1.readlines()
-print(lines)
+# mem=memory()
+memory={}
 output=[]
 #Firstly, checking where is data declared!
 if(lines.__contains__(".data\n")):
@@ -45,35 +48,37 @@ while(k<len(lines) and(case==2 or case==3)):
             if(t1>=0):
                 num_list=(lines[k][t1+5:].strip()).split()
                 for num in num_list:
-                    memory[str(hex(data_address))]=num
+                    memory[(hex(data_address))]=num
                     data_address+=1 
             elif(t2>=0):
                 num_list=(lines[k][t2+5:].strip()).split()
                 for num in num_list:
-                    memory[str(hex(data_address))]=num
+                    memory[(hex(data_address))]=num
                     data_address+=4
             elif(t3>=0):
                 num_list=(lines[k][t3+6:].strip()).split()
                 for num in num_list:
-                    memory[str(hex(data_address))]=num
+                    memory[(hex(data_address))]=num
                     data_address+=8
             elif(t5>=0):
                 num_list=(lines[k][t5+5:].strip()).split()
                 for num in num_list:
-                    memory[str(hex(data_address))]=num
+                    memory[(hex(data_address))]=num
                     data_address+=2
             else:
                 my_str_list=(lines[k][t4+7:].strip())  
                 for c in my_str_list[1:len(my_str_list)-1]:
-                    memory[str(hex(data_address))]=c
+                    memory[(hex(data_address))]=c
                     data_address+=1  
             # lines[k]=lines[k].replace(" ","")
             # lines[k]=lines[k].replace("\n","")        
             data_parts.append(lines[k])                                                   
-    k=k+1 
-print(data_parts)        
-for key in memory:
-    print(key+":"+memory[key]+"\n")     
+    k=k+1   
+f3.write("mem_from_data=")       
+f3.write("{\n")
+for i in range(0x10000000,data_address):
+    f3.write(str(hex(i))+":"+"\""+str(memory[hex(i)])+"\""+",\n")
+f3.write("}")   
 
 ##### MAIN PART #####################
 pc=0x0
