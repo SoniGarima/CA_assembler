@@ -1,4 +1,5 @@
 import os
+from memory import memory
 f1=open("data.asm","r")
 os.remove("coded.mc")
 f2=open("coded.mc","x")
@@ -25,7 +26,6 @@ elif(m<0 and k>=0):
 else:
     case=3            
 k=k+1
-memory={}
 labels_vars={}
 data_parts=[]
 data_address=0x10000000
@@ -67,32 +67,35 @@ while(k<len(lines) and(case==2 or case==3)):
                 for c in my_str_list[1:len(my_str_list)-1]:
                     memory[str(hex(data_address))]=c
                     data_address+=1  
+            # lines[k]=lines[k].replace(" ","")
+            # lines[k]=lines[k].replace("\n","")        
             data_parts.append(lines[k])                                                   
-    k=k+1
-print(data_parts)      
+    k=k+1 
+print(data_parts)        
 for key in memory:
     print(key+":"+memory[key]+"\n")     
 
 ##### MAIN PART #####################
-
+pc=0x0
 count1=0
 for line in lines:
     if(line==" "):
         continue
     elif(line!=" "):
         count1=count1+1
-        line=line.replace(" ","")
-        line=line.replace("\n","")
+        # line=line.replace(" ","")
+        # line=line.replace("\n","")
         if(line.__contains__(".data") or line.__contains__(".text")):
-            pass
+            continue
         elif(line in data_parts):
-            pass
+            continue
         else:
-
-            if(line.__contains__("add ") or line.__contains__("sub ") or line.__contains__("mul ") or line.__contains__("div ") or line.__contains__("sra") or line.__contains__("rem") or line.__contains__("or ") or line.__contains__("srl ") or line.__contains__("xor ") or line.__contains__("and ") or line.__contains__("sll ") or line.__contains__("slt ")):
-                if(line.__contains__("add")):
-                    h=line.find("add")
-                    [k1,k2,k3]=line[h+3:].strip().split(",")
+            f2.write(str(hex(pc))+"  ")
+            print(line)
+            if(line.__contains__("add ") or line.__contains__("sub") or line.__contains__("mul") or line.__contains__("div") or line.__contains__("sra") or line.__contains__("rem") or line.__contains__("or ") or line.__contains__("srl") or line.__contains__("xor") or line.__contains__("and ") or line.__contains__("sll") or line.__contains__("slt")):
+                if(line.__contains__("add ")):
+                    h=line.find("add ")
+                    [k1,k2,k3]=line[h+3:].strip().split()
                     h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                     h2=str(bin(int(k2[1],10))[2:]).zfill(5)
                     h1=str(bin(int(k3[1],10))[2:]).zfill(5)
@@ -102,8 +105,8 @@ for line in lines:
                     mac_codet=fun7+h1+h2+fun3+h3+opc
                     mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
                     f2.write("0x"+mac_code+"\n")
-                if(line.__contains__("sub ")):
-                    h=line.find("sub ")
+                if(line.__contains__("sub")):
+                    h=line.find("sub")
                     [k1,k2,k3]=line[h+3:].strip().split()
                     h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                     h2=str(bin(int(k2[1],10))[2:]).zfill(5)
@@ -162,8 +165,8 @@ for line in lines:
                     mac_codet=fun7+h1+h2+fun3+h3+opc
                     mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
                     f2.write("0x"+mac_code+"\n")
-                if(line.__contains__("or")):
-                    h=line.find("or")
+                if(line.__contains__("or ")):
+                    h=line.find("or ")
                     [k1,k2,k3]=line[h+3:].strip().split()
                     h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                     h2=str(bin(int(k2[1],10))[2:]).zfill(5)
@@ -198,8 +201,8 @@ for line in lines:
                     mac_codet=fun7+h1+h2+fun3+h3+opc
                     mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
                     f2.write("0x"+mac_code+"\n")
-                if(line.__contains__("and")):
-                    h=line.find("and")
+                if(line.__contains__("and ")):
+                    h=line.find("and ")
                     [k1,k2,k3]=line[h+3:].strip().split()
                     h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                     h2=str(bin(int(k2[1],10))[2:]).zfill(5)
@@ -414,43 +417,67 @@ for line in lines:
                     mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
                     f2.write("0x"+mac_code+"\n")     
                     
-            elif(line.__contains__("jalr") or line.__contains__("lb") or line.__contains__("lw") or line.__contains__("ld") or line.__contains__("lh")):
+            elif(line.__contains__("jalr") or line.__contains__("lb") or line.__contains__("lh") or line.__contains__("lw") or line.__contains__("ld")):
                 if(line.__contains__("jalr")):
                     y=line.find("jalr")
-                    y1=line.find("(")
-                    y2=line.find(")")
-                    j1=line[y+4:y1]
-                    if(line.find(",")>=0):
-                        [k1,k3]=j1.split(",")
-                        k1=k1.strip()
-                        k3=k3.strip()
-                    else:
-                        [k1,k3]=j1.split()
-                        k1=k1.strip()
-                        k3=k3.strip()    
-                    k2=line[y1+1:y2].strip()
-                    h1=str(bin(int(k1[1],10))[2:].zfill(5)) 
-                    h2= str(bin(int(k2[1],10))[2:].zfill(5)) 
-                    if(int(k3)>=0):
-                        if(k3.startswith("0x")):
-                            h3=str(bin(int(k3, 16))[2:].zfill(12))
-                        else:    
-                            h3=str(bin(int(k3,10))[2:].zfill(12)) 
-                    elif(int(k3)<0):
-                        if(k3.startswith("0x")):
-                            h3=str(bin(int(k3, 16))[3:].zfill(12))
-                        else:    
-                            h3=str(bin(int(k3,10))[3:].zfill(12)) 
+                    h=y+4
+                    func3="000"
+                    opcode="1100111"
+                if(line.__contains__("lb")) :
+                    y=line.find("lb")
+                    h=y+2
+                    func3="000"
+                    opcode="0000011"
+                if(line.__contains__("ld")) :
+                    y=line.find("ld")
+                    h=y+2
+                    func3="011"
+                    opcode="0000011"
+                if(line.__contains__("lh")) :
+                    y=line.find("lh")
+                    h=y+2
+                    func3="001"
+                    opcode="0000011"
+                if(line.__contains__("lw")) :
+                    y=line.find("lw")
+                    h=y+2 
+                    func3="010"
+                    opcode="0000011"          
+                y1=line.find("(")
+                y2=line.find(")")
+                j1=line[h:y1]
+                if(line.find(",")>=0):
+                    [k1,k3]=j1.split(",")
+                    k1=k1.strip()
+                    k3=k3.strip()
+                else:
+                    [k1,k3]=j1.split()
+                    k1=k1.strip()
+                    k3=k3.strip()    
+                k2=line[y1+1:y2].strip()
+                print(k1)
+                print(k2)
+                print(k3)
+                h1=str(bin(int(k1[1],10))[2:].zfill(5)) 
+                h2= str(bin(int(k2[1],10))[2:].zfill(5)) 
+                if(int(k3)>=0):
+                    if(k3.startswith("0x")):
+                        h3=str(bin(int(k3, 16))[2:].zfill(12))
+                    else:    
+                        h3=str(bin(int(k3,10))[2:].zfill(12)) 
+                elif(int(k3)<0):
+                    if(k3.startswith("0x")):
+                        h3=str(bin(int(k3, 16))[3:].zfill(12))
+                    else:    
+                        h3=str(bin(int(k3,10))[3:].zfill(12))         
                     k3=int(h3,2)
                     k3=2**12-k3; 
                     k3=str(k3)    
                     h3=str(bin(int(k3,10))[2:].zfill(12))     
-                    func3="000"
-                    opcode="1100111"
-                    mac_codet=h3+h2+func3+h1+opcode
-                    mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
-                    f2.write("0x"+mac_code+"\n")
-            
+                mac_codet=h3+h2+func3+h1+opcode
+                mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
+                f2.write("0x"+mac_code+"\n")
+                    
             elif (line.__contains__("beq") or line.__contains__("bge") or line.__contains__("blt") or line.__contains__("bne")):
                 if "beq" in line:
                     sa1="beq"
@@ -579,8 +606,8 @@ for line in lines:
                         mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
                 f2.write("0x"+mac_code+"\n")
 
-            elif(line.__contains__("jal")):
-                h=line.find("jal")
+            elif(line.__contains__("jal ")):
+                h=line.find("jal ")
                 [k1,k2]=line[h+3:].strip().split(",")
                 h1=str(bin(int(k1[1],10))[2:].zfill(5))
                 count2=0
@@ -643,7 +670,7 @@ for line in lines:
                 mac_codet=imm+h1+opcode
                 mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
                 f2.write("0x"+mac_code+"\n")
-                
+        pc=pc+4        
 
 
                                 
