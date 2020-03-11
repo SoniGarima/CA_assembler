@@ -138,6 +138,11 @@ for line in lines:
                     mac_codet=h1+opcode
                     mac_code=str(hex(int(mac_codet,2))[2:].zfill(3))
                     mac_code=h2+mac_code
+                elif(k2.startswith("0b")):
+                    x2=k2[2:]
+                    h1=(hex(int(x2,2))[2:]).zfill(5)
+                    ro=(hex(int(rd+opcode,2))[2:]).zfill(3)
+                    mac_code=h1+ro
                 else:
                     h2=str(bin(int(k2,10))[2:].zfill(20)) 
                     mac_codet=h2+h1+opcode
