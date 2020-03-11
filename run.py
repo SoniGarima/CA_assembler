@@ -14,12 +14,12 @@ class run:
     def decode(self):
         curr_bin_ins=bin(int(IR[2:],16))[2:].zfill(32)    
         opcode=curr_bin_ins[25:]
-        if(opcode=="0110011"):
+	if(opcode=="0110011"):
             fun7=curr_bin_ins[0:7]
             fun3=curr_bin_ins[17:20]
             rs2=curr_bin_ins[7:12]
             rs1=curr_bin_ins[12:17]
-	        rd=curr_bin_ins[20:25]
+	    rd=curr_bin_ins[20:25]
             if(fun7=="0100000"):
                 if(fun3=="000"):
                     print("DECODE: Operation is SUB, first operand R"+int(rs1,2)+ " , Second operand R"+int(rs2,2)+", destination register R"+int(rd,2))
@@ -136,10 +136,10 @@ class run:
 				print("DECODE: Operation is LUI, first operand is Immediate field, destination register R"+int(rd,2))
                                 print("DECODE: The immediate value is"+int(imm,2))
                                 executeU("LUI",imm,rd,-1)
-            elif(opcode=="0010111"):
-		print("DECODE: Operation is AUIPC, first operand is Immediate field, destination register R"+int(rd,2))
-                print("DECODE: The immediate value is"+int(imm,2))
-                executeU("LUI",imm,rd,PC_Temp)         
+                        elif(opcode=="0010111"):
+				print("DECODE: Operation is AUIPC, first operand is Immediate field, destination register R"+int(rd,2))
+                                print("DECODE: The immediate value is"+int(imm,2))
+                                executeU("LUI",imm,rd,PC_Temp)         
                 
                 
 
@@ -207,14 +207,14 @@ class run:
             num2=int(r2,2)
             mem_write(num1|num2,r3)
 	
-    def executeU(self,func,im,r,pc_t):
+   def executeU(self,func,im,r,pc_t):
 	if(func=="LUI"):
 		im_=(hex(int(im,2))[2:0]).zfill(5)+"000"
-                reg_update(im_,r)
-        elif(fun=="AUIPC"):
+		reg_update(im_,r)
+	elif(fun=="AUIPC"):
 		im_=(hex(int(im,2))[2:0]).zfill(5)+"000"
 		im_=im_+pc_t
-                reg_update(im_,r)	
+		reg_update(im_,r)	
 
      def executeIL(self,func,r1,r2,r3):
 
