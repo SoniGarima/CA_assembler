@@ -1,6 +1,3 @@
-from constants import X0
-import os
-import run
 f1=open("coded.mc")
 lines=f1.readlines()
 all_instructions={
@@ -36,19 +33,7 @@ all_instructions={
     'jal':['UJ', '1101111'],
 	'rem':['R','0110011','110','0000001'],
     }
-memory={}
-IR=""
-PC=0x0
 
-for line in lines:
-    line.
-    #fetch
-    # IR=line
-    # PC=PC+4
-    # print("FETCH:Fetch instruction"+line+" from address "+str(PC))
-    # #decode
-    # curr_bin_ins=bin(int(IR[2:],16))[2:].zfill(32)
-    # opcode=curr_bin_ins[25:]
 
     
 
