@@ -96,6 +96,7 @@ for line in lines:
             continue
         elif(line in data_parts):
             continue
+        #ek case empty label ka bhi lagega, laga do yar koi!
         else:
             f2.write(str(hex(pc))+"  ")
             print(line)
