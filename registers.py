@@ -1,10 +1,6 @@
 class registers:
     def __init__(self):
         self.reg=[0,0,2147483632,268435456,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-        # for i in range(0,32):
-        #     reg[i]=0
-        # reg[2]=2147483632
-        # reg[3]=268435456
     def regVal(self,num) :
         return self.reg[num]  
     
