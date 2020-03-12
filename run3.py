@@ -308,16 +308,16 @@ class run:
     def executeSB(self,func,r1,r2,r3):
         if(func=="BEQ"):
             if(int(r1,2)==int(r3,2)):
-                PC=PC+int(r2,2)
+                self.PC=self.PC+int(r2,2)
         elif(func=="BNE"):
             if(int(r1,2)!=int(r3,2)):
-                PC=PC+int(r2,2)
+                self.PC=self.PC+int(r2,2)
         elif(func=="BLT"):
             if(int(r1,2)<int(r3,2)):
-                PC=PC+int(r2,2)  
+                self.PC=self.PC+int(r2,2)  
         elif(func=="BGE"):
             if(int(r1,2)>=int(r3,2)):
-                PC=PC+int(r2,2)      
+                self.PC=self.PC+int(r2,2)      
 
     def executeIL(self,func,r1,r2,r3):
         eff_address=my_reg[int(r3,2)]+int(r2,2)
