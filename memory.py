@@ -13,7 +13,7 @@ class memory:
 
     def ret_byte(self,address):
         if address in self.memory:
-            return bin(self.memory[address])[2:].zfill(8)
+            return self.memory[address]
         else:
             return "00000000"
 
@@ -42,7 +42,7 @@ class memory:
             return "00000000" 
     
     def write_word(self,address,value):        
-        value = str(bin(int(str(value),16)))[2:].zfill(32)
+        value = str(bin(int(value)))[2:].zfill(32)
         b3 = value[0:8]
         b2 = value[8:16]
         b1 = value[16:24]
@@ -53,11 +53,11 @@ class memory:
         self.memory[address+3] = b3
 
     def write_byte(self,address,value):
-        value = str(bin(int(str(value),16)))[2:].zfill(8)
+        value = str(bin(int(value)))[2:].zfill(8)
         self.memory[address] = value
 
     def write_db(self,address,value):
-        value = str(bin(int(str(value),16)))[2:].zfill(64)
+        value = str(bin(int(value)))[2:].zfill(64)
         self.memory[address+7] = value[56:64]
         self.memory[address+6] = value[48:56]
         self.memory[address+5] = value[40:48]
@@ -68,10 +68,11 @@ class memory:
         self.memory[address] = value[0:8]
 
     def write_asciiz(self,address,value):
+        value = str(bin(int(str(ord(value)))))[2:].zfill(8)
         self.memory[address] = value
         
     def write_half(self,address,value):        
-        value = str(bin(int(str(value),16)))[2:].zfill(32)
+        value = str(bin(int(value)))[2:].zfill(16)
         self.memory[address] = value[0:8]
         self.memory[address+1] = value[8:16]  
         
