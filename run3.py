@@ -12,13 +12,13 @@ my_reg=registers()
 from my_memory import mem_from_data
 for key in mem_from_data:
     my_mem.write_byte(key,int(mem_from_data[key],2))
-key+=1
 class run:
     def __init__(self):
         self.PC=0x0
         self.IR=0
         self.PC_temp=self.PC
     def operation(self):
+        
         while self.PC in pc_dict:
             mac_code=pc_dict[self.PC]
             self.fetch(mac_code)    
@@ -184,15 +184,15 @@ class run:
     
         elif(opcode=="0010111" or opcode=="0110111"):
             rd=curr_bin_ins[20:25]
-            imm=curr_bin_ins[0:25]
+            imm=curr_bin_ins[0:20]
             if(opcode=="0110111"): 
                 print("DECODE: Operation is LUI, first operand is Immediate field, destination register R",int(rd,2))
                 print("DECODE: The immediate value is",int(imm,2))
-                self.executeU("LUI",imm,rd,-1)
+                self.executeU("LUI",imm,rd)
             elif(opcode=="0010111"):
-                print("DECODE: Operation is AUIPC, first operand is Immediate field, destination register R"+int(rd,2))
-                print("DECODE: The immediate value is"+int(imm,2))
-                self.executeU("AUIPC",imm,rd,self.PC_Temp)  
+                print("DECODE: Operation is AUIPC, first operand is Immediate field, destination register R",int(rd,2))
+                print("DECODE: The immediate value is",int(imm,2))
+                self.executeU("AUIPC",imm,rd)  
         elif(opcode=="1101111"):
             rd=curr_bin_ins[20:25]
             imm=curr_bin_ins[0:25]
@@ -203,14 +203,11 @@ class run:
             imm_=imm1+imm2+imm3+imm0
             print("DECODE: Operation is JAL,the first operand is Immediate field, destination register R",int(rd,2))
             print("DECODE: The immediate value is",int(imm_,2))
-            self.executeUj("JAL",imm_,rd,self.PC_Temp)
+            self.executeUj("JAL",imm_,rd)
     
-    def executeUj(self,func,im,r,pc_t):
-        pc_t=pc_t[2:]
-        pc_temp=hex(int(pc_t,16))
-        pc_temp+=4
-        PC+=im
-        reg_update((pc_temp),r)             
+    def executeUj(self,func,im,r):
+        my_reg.write_reg(int(r,2),self.PC)
+        self.PC+=int(im,2)            
                 
     def executeR(self,func,r1,r2,r3):
         if(func=="ADD"):
@@ -283,16 +280,16 @@ class run:
             num2=int(r2,2)
             my_reg.write_reg(int(r3,2),num1|num2)
     
-    def executeU(self,func,im,r,pc_t):
+    def executeU(self,func,im,r):
         if(func=="LUI"):
-            im_=(hex(int(im,2))[2:0]).zfill(5)+"000"
-            im_=int(im_,16)
-            reg_update(im_,r)
+            im=im+"000000000000"
+            im=int(im,2)
+            my_reg.write_reg(int(r,2),im)
         else:
-            im_=(hex(int(im,2))[2:0]).zfill(5)+"000"
-            im_=im_+pc_t
-            reg_update(im_,r)     
-                                                                               
+            im=im+"000000000000"
+            im=int(im,2)
+            im=im+self.PC_temp
+            my_reg.write_reg(int(r,2),im)                                                       
 
     def executeIS(self,func,r1,r2,r3):
         eff_address=my_reg.regVal(int(r3,2))+int(r2,2)
