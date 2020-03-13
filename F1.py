@@ -103,7 +103,13 @@ for line in lines:
             if(line.__contains__("add ") or line.__contains__("sub") or line.__contains__("mul") or line.__contains__("div") or line.__contains__("sra") or line.__contains__("rem") or line.__contains__("or ") or line.__contains__("srl") or line.__contains__("xor") or line.__contains__("and ") or line.__contains__("sll") or line.__contains__("slt")):
                 if(line.__contains__("add ")):
                     h=line.find("add ")
-                    [k1,k2,k3]=line[h+3:].strip().split()
+                    if(line.__contains__(",")):
+                        [k1,k2,k3]=line[h+3:].strip().split(",")
+                        k1=k1.strip()
+                        k2=k2.strip()
+                        k3=k3.strip()
+                    else:
+                        [k1,k2,k3]=line[h+3:].strip().split()
                     h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                     h2=str(bin(int(k2[1],10))[2:]).zfill(5)
                     h1=str(bin(int(k3[1],10))[2:]).zfill(5)
@@ -115,7 +121,13 @@ for line in lines:
                     f2.write("0x"+mac_code+"\n")
                 if(line.__contains__("sub")):
                     h=line.find("sub")
-                    [k1,k2,k3]=line[h+3:].strip().split()
+                    if(line.__contains__(",")):
+                        [k1,k2,k3]=line[h+3:].strip().split(",")
+                        k1=k1.strip()
+                        k2=k2.strip()
+                        k3=k3.strip()
+                    else:
+                        [k1,k2,k3]=line[h+3:].strip().split()
                     h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                     h2=str(bin(int(k2[1],10))[2:]).zfill(5)
                     h1=str(bin(int(k3[1],10))[2:]).zfill(5)
@@ -127,7 +139,13 @@ for line in lines:
                     f2.write("0x"+mac_code+"\n")
                 if(line.__contains__("sra")):
                     h=line.find("sra")
-                    [k1,k2,k3]=line[h+3:].strip().split()
+                    if(line.__contains__(",")):
+                        [k1,k2,k3]=line[h+3:].strip().split(",")
+                        k1=k1.strip()
+                        k2=k2.strip()
+                        k3=k3.strip()
+                    else:
+                        [k1,k2,k3]=line[h+3:].strip().split()
                     h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                     h2=str(bin(int(k2[1],10))[2:]).zfill(5)
                     h1=str(bin(int(k3[1],10))[2:]).zfill(5)
@@ -139,7 +157,13 @@ for line in lines:
                     f2.write("0x"+mac_code+"\n")
                 if(line.__contains__("div")):
                     h=line.find("div")
-                    [k1,k2,k3]=line[h+3:].strip().split()
+                    if(line.__contains__(",")):
+                        [k1,k2,k3]=line[h+3:].strip().split(",")
+                        k1=k1.strip()
+                        k2=k2.strip()
+                        k3=k3.strip()
+                    else:
+                        [k1,k2,k3]=line[h+3:].strip().split()
                     h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                     h2=str(bin(int(k2[1],10))[2:]).zfill(5)
                     h1=str(bin(int(k3[1],10))[2:]).zfill(5)
@@ -151,7 +175,13 @@ for line in lines:
                     f2.write("0x"+mac_code+"\n")
                 if(line.__contains__("mul")):
                     h=line.find("mul")
-                    [k1,k2,k3]=line[h+3:].strip().split()
+                    if(line.__contains__(",")):
+                        [k1,k2,k3]=line[h+3:].strip().split(",")
+                        k1=k1.strip()
+                        k2=k2.strip()
+                        k3=k3.strip()
+                    else:
+                        [k1,k2,k3]=line[h+3:].strip().split()
                     h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                     h2=str(bin(int(k2[1],10))[2:]).zfill(5)
                     h1=str(bin(int(k3[1],10))[2:]).zfill(5)
@@ -163,7 +193,13 @@ for line in lines:
                     f2.write("0x"+mac_code+"\n")
                 if(line.__contains__("rem")):
                     h=line.find("rem")
-                    [k1,k2,k3]=line[h+3:].strip().split()
+                    if(line.__contains__(",")):
+                        [k1,k2,k3]=line[h+3:].strip().split(",")
+                        k1=k1.strip()
+                        k2=k2.strip()
+                        k3=k3.strip()
+                    else:
+                        [k1,k2,k3]=line[h+3:].strip().split()
                     h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                     h2=str(bin(int(k2[1],10))[2:]).zfill(5)
                     h1=str(bin(int(k3[1],10))[2:]).zfill(5)
@@ -175,7 +211,13 @@ for line in lines:
                     f2.write("0x"+mac_code+"\n")
                 if(line.__contains__("or ")):
                     h=line.find("or ")
-                    [k1,k2,k3]=line[h+3:].strip().split()
+                    if(line.__contains__(",")):
+                        [k1,k2,k3]=line[h+3:].strip().split(",")
+                        k1=k1.strip()
+                        k2=k2.strip()
+                        k3=k3.strip()
+                    else:
+                        [k1,k2,k3]=line[h+3:].strip().split()
                     h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                     h2=str(bin(int(k2[1],10))[2:]).zfill(5)
                     h1=str(bin(int(k3[1],10))[2:]).zfill(5)
@@ -187,7 +229,13 @@ for line in lines:
                     f2.write("0x"+mac_code+"\n")
                 if(line.__contains__("srl")):
                     h=line.find("srl")
-                    [k1,k2,k3]=line[h+3:].strip().split()
+                    if(line.__contains__(",")):
+                        [k1,k2,k3]=line[h+3:].strip().split(",")
+                        k1=k1.strip()
+                        k2=k2.strip()
+                        k3=k3.strip()
+                    else:
+                        [k1,k2,k3]=line[h+3:].strip().split()
                     h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                     h2=str(bin(int(k2[1],10))[2:]).zfill(5)
                     h1=str(bin(int(k3[1],10))[2:]).zfill(5)
@@ -199,7 +247,13 @@ for line in lines:
                     f2.write("0x"+mac_code+"\n")
                 if(line.__contains__("xor")):
                     h=line.find("xor")
-                    [k1,k2,k3]=line[h+3:].strip().split()
+                    if(line.__contains__(",")):
+                        [k1,k2,k3]=line[h+3:].strip().split(",")
+                        k1=k1.strip()
+                        k2=k2.strip()
+                        k3=k3.strip()
+                    else:
+                        [k1,k2,k3]=line[h+3:].strip().split()
                     h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                     h2=str(bin(int(k2[1],10))[2:]).zfill(5)
                     h1=str(bin(int(k3[1],10))[2:]).zfill(5)
@@ -211,7 +265,13 @@ for line in lines:
                     f2.write("0x"+mac_code+"\n")
                 if(line.__contains__("and ")):
                     h=line.find("and ")
-                    [k1,k2,k3]=line[h+3:].strip().split()
+                    if(line.__contains__(",")):
+                        [k1,k2,k3]=line[h+3:].strip().split(",")
+                        k1=k1.strip()
+                        k2=k2.strip()
+                        k3=k3.strip()
+                    else:
+                        [k1,k2,k3]=line[h+3:].strip().split()
                     h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                     h2=str(bin(int(k2[1],10))[2:]).zfill(5)
                     h1=str(bin(int(k3[1],10))[2:]).zfill(5)
@@ -223,7 +283,13 @@ for line in lines:
                     f2.write("0x"+mac_code+"\n")
                 if(line.__contains__("sll")):
                     h=line.find("sll")
-                    [k1,k2,k3]=line[h+3:].strip().split()
+                    if(line.__contains__(",")):
+                        [k1,k2,k3]=line[h+3:].strip().split(",")
+                        k1=k1.strip()
+                        k2=k2.strip()
+                        k3=k3.strip()
+                    else:
+                        [k1,k2,k3]=line[h+3:].strip().split()
                     h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                     h2=str(bin(int(k2[1],10))[2:]).zfill(5)
                     h1=str(bin(int(k3[1],10))[2:]).zfill(5)
@@ -235,7 +301,13 @@ for line in lines:
                     f2.write("0x"+mac_code+"\n")
                 if(line.__contains__("slt")):
                     h=line.find("slt")
-                    [k1,k2,k3]=line[h+3:].strip().split()
+                    if(line.__contains__(",")):
+                        [k1,k2,k3]=line[h+3:].strip().split(",")
+                        k1=k1.strip()
+                        k2=k2.strip()
+                        k3=k3.strip()
+                    else:
+                        [k1,k2,k3]=line[h+3:].strip().split()
                     h3=str(bin(int(k1[1],10))[2:]).zfill(5)
                     h2=str(bin(int(k2[1],10))[2:]).zfill(5)
                     h1=str(bin(int(k3[1],10))[2:]).zfill(5)
@@ -258,7 +330,13 @@ for line in lines:
                     func3="110" 
                     h=line.find("ori")  
                     h=h+3   
-                [k1,k2,k3]=line[h:].strip().split(",")
+                if(line.__contains__(",")):
+                    [k1,k2,k3]=line[h:].strip().split(",")
+                    k1=k1.strip()
+                    k2=k2.strip()
+                    k3=k3.strip()
+                else:
+                    [k1,k2,k3]=line[h:].strip().split()
                 h1=str(bin(int(k1[1],10))[2:].zfill(5))
                 h2=str(bin(int(k2[1],10))[2:].zfill(5))
                 if(int(k3)>0):
@@ -292,8 +370,6 @@ for line in lines:
                         k3=k3.strip()
                     else:
                         [k1,k3]=j1.split()
-                        k1=k1.strip()
-                        k3=k3.strip()    
                     k2=line[y1+1:y2].strip()
                     h1=str(bin(int(k1[1],10))[2:].zfill(5)) 
                     h2= str(bin(int(k2[1],10))[2:].zfill(5)) 
@@ -328,8 +404,6 @@ for line in lines:
                         k3=k3.strip()
                     else:
                         [k1,k3]=j1.split()
-                        k1=k1.strip()
-                        k3=k3.strip()    
                     k2=line[y1+1:y2].strip()
                     h1=str(bin(int(k1[1],10))[2:].zfill(5)) 
                     h2= str(bin(int(k2[1],10))[2:].zfill(5)) 
@@ -364,8 +438,6 @@ for line in lines:
                         k3=k3.strip()
                     else:
                         [k1,k3]=j1.split()
-                        k1=k1.strip()
-                        k3=k3.strip()    
                     k2=line[y1+1:y2].strip()
                     h1=str(bin(int(k1[1],10))[2:].zfill(5)) 
                     h2= str(bin(int(k2[1],10))[2:].zfill(5)) 
@@ -400,8 +472,6 @@ for line in lines:
                         k3=k3.strip()
                     else:
                         [k1,k3]=j1.split()
-                        k1=k1.strip()
-                        k3=k3.strip()    
                     k2=line[y1+1:y2].strip()
                     h1=str(bin(int(k1[1],10))[2:].zfill(5)) 
                     h2= str(bin(int(k2[1],10))[2:].zfill(5)) 
@@ -460,8 +530,6 @@ for line in lines:
                     k3=k3.strip()
                 else:
                     [k1,k3]=j1.split()
-                    k1=k1.strip()
-                    k3=k3.strip()    
                 k2=line[y1+1:y2].strip()
                 print(k1)
                 print(k2)
@@ -496,8 +564,13 @@ for line in lines:
                 else:
                     sa1="bne"
                 h=line.find(sa1)
-                [k1,k2,k3]=line[h+3:].strip().split(",")
-                print(k2[1])
+                if(line.__contains__(",")):
+                    [k1,k2,k3]=line[h+3:].strip().split(",")
+                    k1=k1.strip()
+                    k2=k2.strip()
+                    k3=k3.strip()
+                else:
+                    [k1,k2,k3]=line[h+3:].strip().split()
                 h1=str(bin(int(k1[1],10))[2:].zfill(5))
                 h2=str(bin(int(k2[1],10))[2:].zfill(5))
                 count2=0
@@ -571,7 +644,12 @@ for line in lines:
             elif(line.__contains__("lui") or line.__contains__("auipc")):
                 if(line.__contains__("lui")):
                     h=line.find("lui")
-                    [k1,k2]=line[h+3:].strip().split(",")
+                    if(line.__contains__(",")):
+                        [k1,k2]=line[h+3:].strip().split(",")
+                        k1=k1.strip()
+                        k2=k2.strip()
+                    else:
+                        [k1,k2]=line[h+3:].strip().split()
                     h1=str(bin(int(k1[1],10))[2:].zfill(5))
                     opcode="0110111"
                     if(k2.startswith("0x")):
@@ -593,7 +671,12 @@ for line in lines:
                         mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
                 else:
                     h=line.find("auipc")
-                    [k1,k2]=line[h+5:].strip().split(",")
+                    if(line.__contains__(",")):
+                        [k1,k2]=line[h+5:].strip().split(",")
+                        k1=k1.strip()
+                        k2=k2.strip()
+                    else:
+                        [k1,k2]=line[h+5:].strip().split()
                     h1=str(bin(int(k1[1],10))[2:].zfill(5))
                     opcode="0010111"
                     if(k2.startswith("0x")):
@@ -616,7 +699,12 @@ for line in lines:
 
             elif(line.__contains__("jal ")):
                 h=line.find("jal ")
-                [k1,k2]=line[h+3:].strip().split(",")
+                if(line.__contains__(",")):
+                    [k1,k2]=line[h+3:].strip().split(",")
+                    k1=k1.strip()
+                    k2=k2.strip()
+                else:
+                    [k1,k2]=line[h+3:].strip().split()
                 h1=str(bin(int(k1[1],10))[2:].zfill(5))
                 count2=0
                 for l in lines:
