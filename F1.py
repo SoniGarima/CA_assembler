@@ -665,6 +665,12 @@ for line in lines:
                         mac_codet=h1+opcode
                         mac_code=str(hex(int(mac_codet,2))[2:].zfill(3))
                         mac_code=h2+mac_code
+                    elif(k2.startswith("0b")):
+                        x2=k2[2:]
+                        h2=(hex(int(x2,2))[2:]).zfill(5)
+                        ro=(hex(int(h1+opcode,2))[2:]).zfill(3)
+                        mac_code=h2+ro  
+
                     else:
                         h2=str(bin(int(k2,10))[2:].zfill(20))
                         mac_codet=h2+h1+opcode
@@ -691,6 +697,12 @@ for line in lines:
                         mac_codet=h1+opcode
                         mac_code=str(hex(int(mac_codet,2))[2:].zfill(3))
                         mac_code=h2+mac_code
+                    elif(k2.startswith("0b")):
+                        x2=k2[2:]
+                        h2=(hex(int(x2,2))[2:]).zfill(5)
+                        ro=(hex(int(h1+opcode,2))[2:]).zfill(3)
+                        mac_code=h2+ro 
+
                     else:
                         h2=str(bin(int(k2,10))[2:].zfill(20)) 
                         mac_codet=h2+h1+opcode
@@ -766,7 +778,10 @@ for line in lines:
                 mac_codet=imm+h1+opcode
                 mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
                 f2.write("0x"+mac_code+"\n")
-        pc=pc+4        
+        if (line.endswith(":")):
+            continue
+        else:
+            pc=pc+4     
 
 
                                 
