@@ -98,7 +98,10 @@ for line in lines:
             continue
         #ek case empty label ka bhi lagega, laga do yar koi!
         else:
-            f2.write(str(hex(pc))+"  ")
+            
+            if (line.endswith(":\n")==0):
+                f2.write(str(hex(pc))+"  ")
+                pc=pc+4     
             print(line)
             if(line.__contains__("add ") or line.__contains__("sub") or line.__contains__("mul") or line.__contains__("div") or line.__contains__("sra") or line.__contains__("rem") or line.__contains__("or ") or line.__contains__("srl") or line.__contains__("xor") or line.__contains__("and ") or line.__contains__("sll") or line.__contains__("slt")):
                 if(line.__contains__("add ")):
@@ -778,10 +781,7 @@ for line in lines:
                 mac_codet=imm+h1+opcode
                 mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
                 f2.write("0x"+mac_code+"\n")
-        if (line.endswith(":")):
-            continue
-        else:
-            pc=pc+4     
+        
 
 
                                 
