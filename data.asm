@@ -6,4 +6,5 @@ var4: .dword 4566
 var5:  .half 12
 .text
 addi x1,x4,23
+label:
 addi x1,x1,34
