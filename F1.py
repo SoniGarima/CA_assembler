@@ -29,10 +29,10 @@ else:
     case=3            
 k=k+1
 labels_vars={}
+labels={}
 data_parts=[]
 data_address=0x10000000
 while(k<len(lines) and(case==2 or case==3)):
-    print(k)
     if(lines[k]==".text\n"):
         break
     else:
@@ -73,22 +73,43 @@ while(k<len(lines) and(case==2 or case==3)):
             # lines[k]=lines[k].replace("\n","")        
             data_parts.append(lines[k])                                                   
     k=k+1   
-print(mem.ret_byte(0x10000000))
 f3.write("mem_from_data=")       
 f3.write("{\n")
 for i in range(0x10000000,data_address):
-    print((i))
-    print(mem.ret_byte((i)))
     f3.write(str(hex(i))+":"+"\""+(mem.ret_byte((i)))+"\""+",\n")
 f3.write("}")   
 
 ##### MAIN PART #####################
 pc=0x0
 count1=0
+pc1=0x0
 for line in lines:
-    if(line==" "):
+    print(pc1)
+    if(line.__contains__(".data") or line.__contains__(".text")):
+        pass
+    elif line in data_parts:
+        print("datas")
+        pass
+    elif(line.strip()==''):
+        print(line)
+        print("newline")
+        pass
+    elif(line.endswith(":\n")==1):
+        label=line.split(":")
+        labels[label[0]]=pc1
+        
+    elif(line.__contains__(":")):
+        ind=line.find(":")
+        label=line[:ind].strip()
+        labels[label]=pc1
+        
+    else:
+        pc1+=4
+print(labels)                
+for line in lines:
+    if(line.strip()==""):
         continue
-    elif(line!=" "):
+    elif(line!="\n"):
         count1=count1+1
         # line=line.replace(" ","")
         # line=line.replace("\n","")
@@ -96,14 +117,12 @@ for line in lines:
             continue
         elif(line in data_parts):
             continue
-        #ek case empty label ka bhi lagega, laga do yar koi!
+        
+        elif(line.endswith(":\n")==1):
+            continue
         else:
-            
-            if (line.endswith(":\n")==0):
-                f2.write(str(hex(pc))+"  ")
-                pc=pc+4     
-            print(line)
-            if(line.__contains__("add ") or line.__contains__("sub") or line.__contains__("mul") or line.__contains__("div") or line.__contains__("sra") or line.__contains__("rem") or line.__contains__("or ") or line.__contains__("srl") or line.__contains__("xor") or line.__contains__("and ") or line.__contains__("sll") or line.__contains__("slt")):
+            f2.write(str(hex(pc))+"  ")
+            if(line.__contains__("add ") or line.__contains__("sub") or line.__contains__("mul") or line.__contains__("div") or line.__contains__("sra") or line.__contains__("rem") or line.__contains__("or ") or line.__contains__("srl ") or line.__contains__("xor") or line.__contains__("and ") or line.__contains__("sll ") or line.__contains__("slt")):
                 if(line.__contains__("add ")):
                     h=line.find("add ")
                     if(line.__contains__(",")):
@@ -113,9 +132,9 @@ for line in lines:
                         k3=k3.strip()
                     else:
                         [k1,k2,k3]=line[h+3:].strip().split()
-                    h3=str(bin(int(k1[1],10))[2:]).zfill(5)
-                    h2=str(bin(int(k2[1],10))[2:]).zfill(5)
-                    h1=str(bin(int(k3[1],10))[2:]).zfill(5)
+                    h3=str(bin(int(k1[1:],10))[2:]).zfill(5)
+                    h2=str(bin(int(k2[1:],10))[2:]).zfill(5)
+                    h1=str(bin(int(k3[1:],10))[2:]).zfill(5)
                     opc="0110011"
                     fun3="000"
                     fun7="0000000"
@@ -131,9 +150,9 @@ for line in lines:
                         k3=k3.strip()
                     else:
                         [k1,k2,k3]=line[h+3:].strip().split()
-                    h3=str(bin(int(k1[1],10))[2:]).zfill(5)
-                    h2=str(bin(int(k2[1],10))[2:]).zfill(5)
-                    h1=str(bin(int(k3[1],10))[2:]).zfill(5)
+                    h3=str(bin(int(k1[1:],10))[2:]).zfill(5)
+                    h2=str(bin(int(k2[1:],10))[2:]).zfill(5)
+                    h1=str(bin(int(k3[1:],10))[2:]).zfill(5)
                     opc="0110011"
                     fun3="000"
                     fun7="0100000"
@@ -149,9 +168,9 @@ for line in lines:
                         k3=k3.strip()
                     else:
                         [k1,k2,k3]=line[h+3:].strip().split()
-                    h3=str(bin(int(k1[1],10))[2:]).zfill(5)
-                    h2=str(bin(int(k2[1],10))[2:]).zfill(5)
-                    h1=str(bin(int(k3[1],10))[2:]).zfill(5)
+                    h3=str(bin(int(k1[1:],10))[2:]).zfill(5)
+                    h2=str(bin(int(k2[1:],10))[2:]).zfill(5)
+                    h1=str(bin(int(k3[1:],10))[2:]).zfill(5)
                     opc="0110011"
                     fun3="101"
                     fun7="0100000"
@@ -167,9 +186,9 @@ for line in lines:
                         k3=k3.strip()
                     else:
                         [k1,k2,k3]=line[h+3:].strip().split()
-                    h3=str(bin(int(k1[1],10))[2:]).zfill(5)
-                    h2=str(bin(int(k2[1],10))[2:]).zfill(5)
-                    h1=str(bin(int(k3[1],10))[2:]).zfill(5)
+                    h3=str(bin(int(k1[1:],10))[2:]).zfill(5)
+                    h2=str(bin(int(k2[1:],10))[2:]).zfill(5)
+                    h1=str(bin(int(k3[1:],10))[2:]).zfill(5)
                     opc="0110011"
                     fun3="100"
                     fun7="0000001"
@@ -185,9 +204,9 @@ for line in lines:
                         k3=k3.strip()
                     else:
                         [k1,k2,k3]=line[h+3:].strip().split()
-                    h3=str(bin(int(k1[1],10))[2:]).zfill(5)
-                    h2=str(bin(int(k2[1],10))[2:]).zfill(5)
-                    h1=str(bin(int(k3[1],10))[2:]).zfill(5)
+                    h3=str(bin(int(k1[1:],10))[2:]).zfill(5)
+                    h2=str(bin(int(k2[1:],10))[2:]).zfill(5)
+                    h1=str(bin(int(k3[1:],10))[2:]).zfill(5)
                     opc="0110011"
                     fun3="000"
                     fun7="0000001"
@@ -203,9 +222,9 @@ for line in lines:
                         k3=k3.strip()
                     else:
                         [k1,k2,k3]=line[h+3:].strip().split()
-                    h3=str(bin(int(k1[1],10))[2:]).zfill(5)
-                    h2=str(bin(int(k2[1],10))[2:]).zfill(5)
-                    h1=str(bin(int(k3[1],10))[2:]).zfill(5)
+                    h3=str(bin(int(k1[1:],10))[2:]).zfill(5)
+                    h2=str(bin(int(k2[1:],10))[2:]).zfill(5)
+                    h1=str(bin(int(k3[1:],10))[2:]).zfill(5)
                     opc="0110011"
                     fun3="110"
                     fun7="0000001"
@@ -221,9 +240,9 @@ for line in lines:
                         k3=k3.strip()
                     else:
                         [k1,k2,k3]=line[h+3:].strip().split()
-                    h3=str(bin(int(k1[1],10))[2:]).zfill(5)
-                    h2=str(bin(int(k2[1],10))[2:]).zfill(5)
-                    h1=str(bin(int(k3[1],10))[2:]).zfill(5)
+                    h3=str(bin(int(k1[1:],10))[2:]).zfill(5)
+                    h2=str(bin(int(k2[1:],10))[2:]).zfill(5)
+                    h1=str(bin(int(k3[1:],10))[2:]).zfill(5)
                     opc="0110011"
                     fun3="110"
                     fun7="0000000"
@@ -239,9 +258,9 @@ for line in lines:
                         k3=k3.strip()
                     else:
                         [k1,k2,k3]=line[h+3:].strip().split()
-                    h3=str(bin(int(k1[1],10))[2:]).zfill(5)
-                    h2=str(bin(int(k2[1],10))[2:]).zfill(5)
-                    h1=str(bin(int(k3[1],10))[2:]).zfill(5)
+                    h3=str(bin(int(k1[1:],10))[2:]).zfill(5)
+                    h2=str(bin(int(k2[1:],10))[2:]).zfill(5)
+                    h1=str(bin(int(k3[1:],10))[2:]).zfill(5)
                     opc="0110011"
                     fun3="101"
                     fun7="0000000"
@@ -257,9 +276,9 @@ for line in lines:
                         k3=k3.strip()
                     else:
                         [k1,k2,k3]=line[h+3:].strip().split()
-                    h3=str(bin(int(k1[1],10))[2:]).zfill(5)
-                    h2=str(bin(int(k2[1],10))[2:]).zfill(5)
-                    h1=str(bin(int(k3[1],10))[2:]).zfill(5)
+                    h3=str(bin(int(k1[1:],10))[2:]).zfill(5)
+                    h2=str(bin(int(k2[1:],10))[2:]).zfill(5)
+                    h1=str(bin(int(k3[1:],10))[2:]).zfill(5)
                     opc="0110011"
                     fun3="100"
                     fun7="0000000"
@@ -275,9 +294,9 @@ for line in lines:
                         k3=k3.strip()
                     else:
                         [k1,k2,k3]=line[h+3:].strip().split()
-                    h3=str(bin(int(k1[1],10))[2:]).zfill(5)
-                    h2=str(bin(int(k2[1],10))[2:]).zfill(5)
-                    h1=str(bin(int(k3[1],10))[2:]).zfill(5)
+                    h3=str(bin(int(k1[1:],10))[2:]).zfill(5)
+                    h2=str(bin(int(k2[1:],10))[2:]).zfill(5)
+                    h1=str(bin(int(k3[1:],10))[2:]).zfill(5)
                     opc="0110011"
                     fun3="111"
                     fun7="0000000"
@@ -293,9 +312,9 @@ for line in lines:
                         k3=k3.strip()
                     else:
                         [k1,k2,k3]=line[h+3:].strip().split()
-                    h3=str(bin(int(k1[1],10))[2:]).zfill(5)
-                    h2=str(bin(int(k2[1],10))[2:]).zfill(5)
-                    h1=str(bin(int(k3[1],10))[2:]).zfill(5)
+                    h3=str(bin(int(k1[1:],10))[2:]).zfill(5)
+                    h2=str(bin(int(k2[1:],10))[2:]).zfill(5)
+                    h1=str(bin(int(k3[1:],10))[2:]).zfill(5)
                     opc="0110011"
                     fun3="001"
                     fun7="0000000"
@@ -311,9 +330,9 @@ for line in lines:
                         k3=k3.strip()
                     else:
                         [k1,k2,k3]=line[h+3:].strip().split()
-                    h3=str(bin(int(k1[1],10))[2:]).zfill(5)
-                    h2=str(bin(int(k2[1],10))[2:]).zfill(5)
-                    h1=str(bin(int(k3[1],10))[2:]).zfill(5)
+                    h3=str(bin(int(k1[1:],10))[2:]).zfill(5)
+                    h2=str(bin(int(k2[1:],10))[2:]).zfill(5)
+                    h1=str(bin(int(k3[1:],10))[2:]).zfill(5)
                     opc="0110011"
                     fun3="010"
                     fun7="0000000"
@@ -340,8 +359,8 @@ for line in lines:
                     k3=k3.strip()
                 else:
                     [k1,k2,k3]=line[h:].strip().split()
-                h1=str(bin(int(k1[1],10))[2:].zfill(5))
-                h2=str(bin(int(k2[1],10))[2:].zfill(5))
+                h1=str(bin(int(k1[1:],10))[2:].zfill(5))
+                h2=str(bin(int(k2[1:],10))[2:].zfill(5))
                 if(int(k3)>0):
                     if(k3.startswith("0x")):
                         h3=str(bin(int(k3, 16))[2:].zfill(12))
@@ -374,8 +393,8 @@ for line in lines:
                     else:
                         [k1,k3]=j1.split()
                     k2=line[y1+1:y2].strip()
-                    h1=str(bin(int(k1[1],10))[2:].zfill(5)) 
-                    h2= str(bin(int(k2[1],10))[2:].zfill(5)) 
+                    h1=str(bin(int(k1[1:],10))[2:].zfill(5)) 
+                    h2= str(bin(int(k2[1:],10))[2:].zfill(5)) 
                     if(int(k3)>=0):
                         if(k3.startswith("0x")):
                             h3=str(bin(int(k3, 16))[2:].zfill(12))
@@ -408,8 +427,8 @@ for line in lines:
                     else:
                         [k1,k3]=j1.split()
                     k2=line[y1+1:y2].strip()
-                    h1=str(bin(int(k1[1],10))[2:].zfill(5)) 
-                    h2= str(bin(int(k2[1],10))[2:].zfill(5)) 
+                    h1=str(bin(int(k1[1:],10))[2:].zfill(5)) 
+                    h2= str(bin(int(k2[1:],10))[2:].zfill(5)) 
                     if(int(k3)>=0):
                         if(k3.startswith("0x")):
                             h3=str(bin(int(k3, 16))[2:].zfill(12))
@@ -442,8 +461,8 @@ for line in lines:
                     else:
                         [k1,k3]=j1.split()
                     k2=line[y1+1:y2].strip()
-                    h1=str(bin(int(k1[1],10))[2:].zfill(5)) 
-                    h2= str(bin(int(k2[1],10))[2:].zfill(5)) 
+                    h1=str(bin(int(k1[1:],10))[2:].zfill(5)) 
+                    h2= str(bin(int(k2[1:],10))[2:].zfill(5)) 
                     if(int(k3)>=0):
                         if(k3.startswith("0x")):
                             h3=str(bin(int(k3, 16))[2:].zfill(12))
@@ -476,8 +495,8 @@ for line in lines:
                     else:
                         [k1,k3]=j1.split()
                     k2=line[y1+1:y2].strip()
-                    h1=str(bin(int(k1[1],10))[2:].zfill(5)) 
-                    h2= str(bin(int(k2[1],10))[2:].zfill(5)) 
+                    h1=str(bin(int(k1[1:],10))[2:].zfill(5)) 
+                    h2= str(bin(int(k2[1:],10))[2:].zfill(5)) 
                     if(int(k3)>=0):
                         if(k3.startswith("0x")):
                             h3=str(bin(int(k3, 16))[2:].zfill(12))
@@ -526,36 +545,36 @@ for line in lines:
                     opcode="0000011"          
                 y1=line.find("(")
                 y2=line.find(")")
-                j1=line[h:y1]
-                if(line.find(",")>=0):
-                    [k1,k3]=j1.split(",")
-                    k1=k1.strip()
-                    k3=k3.strip()
+                if(y1>0 and y2>0):
+                    j1=line[h:y1]
+                    if(line.find(",")>=0):
+                        [k1,k3]=j1.split(",")
+                        k1=k1.strip()
+                        k3=k3.strip()
+                    else:
+                        [k1,k3]=j1.split()
+                    k2=line[y1+1:y2].strip()
+                    h1=str(bin(int(k1[1:],10))[2:].zfill(5)) 
+                    h2= str(bin(int(k2[1:],10))[2:].zfill(5)) 
+                    if(int(k3)>=0):
+                        if(k3.startswith("0x")):
+                            h3=str(bin(int(k3, 16))[2:].zfill(12))
+                        else:    
+                            h3=str(bin(int(k3,10))[2:].zfill(12)) 
+                    elif(int(k3)<0):
+                        if(k3.startswith("0x")):
+                            h3=str(bin(int(k3, 16))[3:].zfill(12))
+                        else:    
+                            h3=str(bin(int(k3,10))[3:].zfill(12))         
+                        k3=int(h3,2)
+                        k3=2**12-k3; 
+                        k3=str(k3)    
+                        h3=str(bin(int(k3,10))[2:].zfill(12))     
+                    mac_codet=h3+h2+func3+h1+opcode
+                    mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
+                    f2.write("0x"+mac_code+"\n")
                 else:
-                    [k1,k3]=j1.split()
-                k2=line[y1+1:y2].strip()
-                print(k1)
-                print(k2)
-                print(k3)
-                h1=str(bin(int(k1[1],10))[2:].zfill(5)) 
-                h2= str(bin(int(k2[1],10))[2:].zfill(5)) 
-                if(int(k3)>=0):
-                    if(k3.startswith("0x")):
-                        h3=str(bin(int(k3, 16))[2:].zfill(12))
-                    else:    
-                        h3=str(bin(int(k3,10))[2:].zfill(12)) 
-                elif(int(k3)<0):
-                    if(k3.startswith("0x")):
-                        h3=str(bin(int(k3, 16))[3:].zfill(12))
-                    else:    
-                        h3=str(bin(int(k3,10))[3:].zfill(12))         
-                    k3=int(h3,2)
-                    k3=2**12-k3; 
-                    k3=str(k3)    
-                    h3=str(bin(int(k3,10))[2:].zfill(12))     
-                mac_codet=h3+h2+func3+h1+opcode
-                mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
-                f2.write("0x"+mac_code+"\n")
+                    print("Loading value of a variable in register is a pseudo instruction and requires two RISC-V instructions")    
                     
             elif (line.__contains__("beq") or line.__contains__("bge") or line.__contains__("blt") or line.__contains__("bne")):
                 if "beq" in line:
@@ -574,52 +593,59 @@ for line in lines:
                     k3=k3.strip()
                 else:
                     [k1,k2,k3]=line[h+3:].strip().split()
-                h1=str(bin(int(k1[1],10))[2:].zfill(5))
-                h2=str(bin(int(k2[1],10))[2:].zfill(5))
-                count2=0
-                for j in lines:
-                    string1=j.split()
-                    if(j!=" "):
-                        if(j.endswith(':')):
-                            if k3 not in j:
-                                continue
-                        else:
-                            count2=count2+1
-                    if(string1[0].__contains__(":")):
-                        string2=string1[0].split(":")
-                        if(string2[0]==k3):
-                            break
-                count4=0
-                count3=0
-                if(count2<count1):
-                    for t in lines:
-                        if(t!=" "):
-                            count3=count3+1
-                            if(count3>=count2):
-                                if(t.__contains__(":")):
-                                    string4=t.split(":")
-                                    if(string4[0]!=k3 and string4[1]=="\n"):
-                                        count4=count4+1
-                                    if(string4[0]==k3 and string4[1]=="\n"):
-                                        count4=count4+1
-                        if(count3==count1):
-                            countx=count1-count4
-                            count2=count2-countx
-                            break
-                else:
-                    for t in lines:
-                        if(t!=" "):
-                            count3=count3+1
-                            if(count3>count1):
-                                if(t.__contains__(":")):
-                                    string4=t.split(":")
-                                    if(string4[0]!=k3 and string4[1]=="\n"):
-                                        count4=count4+1
-                        if(count3==count2):
-                            countx=count2-count4
-                            count2=countx-count1
-                            break
-                imm0=4*count2
+                h1=str(bin(int(k1[1:],10))[2:].zfill(5))
+                h2=str(bin(int(k2[1:],10))[2:].zfill(5))
+                pc_label=labels[k3]
+                imm0=pc_label-pc
+                # count2=0
+                # for j in lines:
+                #     string1=j.split()
+                #     if(j!="\n"):
+                #         if(j.endswith(':')):
+                #             if k3 not in j:
+                #                 continue
+                #         else:
+                #             count2=count2+1
+                #     if(len(string1)!=0):
+                #         if(string1[0].__contains__(":")):
+                #             string2=string1[0].split(":")
+                #             if(string2[0]==k3):
+                #                 break
+                # count4=0
+                # count3=0
+                # if(count2<count1):
+                #     for t in lines:
+                #         if(t!="\n"):
+                #             count3=count3+1
+                #             if(count3>=count2):
+                #                 if(t.__contains__(":")):
+                #                     string4=t.split(":")
+                #                     if(string4[0]!=k3 and string4[1]=="\n"):
+                #                         count4=count4+1
+                #                     if(string4[0]==k3 and string4[1]=="\n"):
+                #                         count4=count4+1
+                #         if(count3==count1):
+                #             countx=count1-count4
+                #             count2=count2-countx
+                #             break
+                # else:
+                #     for t in lines:
+                #         if(t!="\n"):
+                #             count3=count3+1
+                #             if(count3>count1):
+                #                 if(t.__contains__(":")):
+                #                     string4=t.split(":")
+                #                     if(string4[0]!=k3 and string4[1]=="\n"):
+                #                         count4=count4+1
+                #         if(count3==count2):
+                #             countx=count2-count4
+                #             count2=countx-count1
+                #             break
+                
+                # imm0=4*count2
+                # if "bne" in line:
+                #     print(count4)
+                #     print(imm0)
                 if(imm0>=0):
                     imm=str(bin(imm0)[2:].zfill(12)) 
                 else:  
@@ -653,7 +679,7 @@ for line in lines:
                         k2=k2.strip()
                     else:
                         [k1,k2]=line[h+3:].strip().split()
-                    h1=str(bin(int(k1[1],10))[2:].zfill(5))
+                    h1=str(bin(int(k1[1:],10))[2:].zfill(5))
                     opcode="0110111"
                     if(k2.startswith("0x")):
                         x2=k2[2:]
@@ -686,7 +712,7 @@ for line in lines:
                         k2=k2.strip()
                     else:
                         [k1,k2]=line[h+5:].strip().split()
-                    h1=str(bin(int(k1[1],10))[2:].zfill(5))
+                    h1=str(bin(int(k1[1:],10))[2:].zfill(5))
                     opcode="0010111"
                     if(k2.startswith("0x")):
                         x2=k2[2:]
@@ -720,52 +746,54 @@ for line in lines:
                     k2=k2.strip()
                 else:
                     [k1,k2]=line[h+3:].strip().split()
-                h1=str(bin(int(k1[1],10))[2:].zfill(5))
-                count2=0
-                for l in lines:
-                    string1=l.split()
-                    if(l!=" "):
-                        if(l.endswith(":")):
-                            if k3 not in l:
-                                continue
-                        else:
-                            count2=count2+1
-                    if(string1[0].__contains__(":")):
-                        string2=string1[0].split(":")
-                        if(string2[0]==k2):
-                            break
-                count4=0
-                count3=0
-                if(count2<count1):
-                    for t in lines:
-                        if(t!=" "):
-                            count3=count3+1
-                            if(count3>=count2):
-                                if(t.__contains__(":")):
-                                    string4=t.split(":")
-                                    if(string4[0]!=k2 and string4[1]=="\n"):
-                                        count4=count4+1
-                                    if(string4[0]==k2 and string4[1]=="\n"):
-                                        count4=count4+1
-                        if(count3==count1):
-                            countx=count1-count4
-                            count2=count2-countx
-                            break
-                else:
-                    for t in lines:
-                        if(t!=" "):
-                            count3=count3+1
-                            if(count3>count1):
-                                if(t.__contains__(":")):
-                                    string4=t.split(":")
-                                    if(string4[0]!=k2 and string4[1]=="\n"):
-                                        count4=count4+1
-                        if(count3==count2):
-                            countx=count2-count4
-                            count2=countx-count1
-                            break
+                h1=str(bin(int(k1[1:],10))[2:].zfill(5))
+                imm0=labels[k2]-pc
+                # print(imm0)
+                # count2=0
+                # for l in lines:
+                #     string1=l.split()
+                #     if(l!=" "):
+                #         if(l.endswith(":")):
+                #             if k2 not in l:
+                #                 continue
+                #         else:
+                #             count2=count2+1
+                #     if(string1[0].__contains__(":")):
+                #         string2=string1[0].split(":")
+                #         if(string2[0]==k2):
+                #             break
+                # count4=0
+                # count3=0
+                # if(count2<count1):
+                #     for t in lines:
+                #         if(t!=" "):
+                #             count3=count3+1
+                #             if(count3>=count2):
+                #                 if(t.__contains__(":")):
+                #                     string4=t.split(":")
+                #                     if(string4[0]!=k2 and string4[1]=="\n"):
+                #                         count4=count4+1
+                #                     if(string4[0]==k2 and string4[1]=="\n"):
+                #                         count4=count4+1
+                #         if(count3==count1):
+                #             countx=count1-count4
+                #             count2=count2-countx
+                #             break
+                # else:
+                #     for t in lines:
+                #         if(t!=" "):
+                #             count3=count3+1
+                #             if(count3>count1):
+                #                 if(t.__contains__(":")):
+                #                     string4=t.split(":")
+                #                     if(string4[0]!=k2 and string4[1]=="\n"):
+                #                         count4=count4+1
+                #         if(count3==count2):
+                #             countx=count2-count4
+                #             count2=countx-count1
+                #             break
                 
-                imm0=4*count2
+                # imm0=4*count2
             
                 if(imm0>=0):
                     imm=str(bin(imm0)[2:].zfill(20)) 
@@ -781,26 +809,4 @@ for line in lines:
                 mac_codet=imm+h1+opcode
                 mac_code=str(hex(int(mac_codet,2))[2:].zfill(8))
                 f2.write("0x"+mac_code+"\n")
-        
-
-
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                    
-                        
-
-
-
-                    
-
-
-
-
+            pc+=4
