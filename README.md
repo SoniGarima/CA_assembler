@@ -45,8 +45,8 @@ out1.txt, coded.mc for phase1 and out2.txt for phase2.
 
 ### Instructions 
  1.If there exist any instruction other than those 31 specified above, the program would halt there and show error on the terminal window.\
- 2. The arguments of the instructions can be separated by commas(,) or white spaces( ).
- 3. If the number of arguments given are less or more than expected, the program will halt with an error message.
+ 2. The arguments of the instructions can be separated by commas(,) or white spaces( ).\
+ 3. If the number of arguments given are less or more than expected, the program will halt with an error message.\
  4. The format of labels expected is:
 ```
 <label_name>:
