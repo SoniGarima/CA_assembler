@@ -22,10 +22,11 @@ It supports the following assembler directives:
 ```
 
 ### Installing
-We have 4 test codes:--
+We have 3 test codes:--
 1. Fibonacci    ----  data.asm
 2. Bubble sort  ---- data4.asm
 3. Factorial    ---- data2.asm
+
 For running the code All you have to do is:
 1. Compile and Run  start.c  to run the phase1 and phase2 codes.:
 ```
@@ -42,18 +43,15 @@ press 3 for data4.asm
 3. Now press 1 or 2 or 3 as per your convenience and get the outputs in
 out1.txt, coded.mc for phase1 and out2.txt for phase2.
 
-## Instructions 
-1.If there exist any instruction other than those 31 specified above, the
-program would halt there and show error on the terminal window.
-2. The arguments of the instructions can be separated by commas(,) or white
-spaces( ).
-3. If the number of arguments given are less or more than expected, the
-program will halt with an error message.
-4. The format of labels expected is:
+### Instructions 
+ 1.If there exist any instruction other than those 31 specified above, the program would halt there and show error on the terminal window.\
+ 2. The arguments of the instructions can be separated by commas(,) or white spaces( ).
+ 3. If the number of arguments given are less or more than expected, the program will halt with an error message.
+ 4. The format of labels expected is:
 ```
 <label_name>:
 ```
-5. The ld, lw, lh, lb instruction also takes 3 arguments:
+ 5. The ld, lw, lh, lb instruction also takes 3 arguments:
 ```
  lw x3,0(x2)
  ```
