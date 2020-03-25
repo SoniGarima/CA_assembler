@@ -1,0 +1,373 @@
+FETCH:Fetch instruction 0x10000517 from address 0
+DECODE: Operation is AUIPC, first operand is Immediate field, destination register R 10
+DECODE: The immediate value is 65536
+Executed
+Number of clock cycles: 1
+FETCH:Fetch instruction 0x00052503 from address 4
+DECODE: Operation is LW, first operand R 10  , Second operand is Immediate field, destination register R 10
+DECODE: Read registers R 10  =  268435456 , The immediate value is  0
+Executed
+Number of clock cycles: 2
+FETCH:Fetch instruction 0x00c000ef from address 8
+DECODE: Operation is JAL,the first operand is Immediate field, destination register R 1
+DECODE: The immediate value is 12
+Executed
+Number of clock cycles: 3
+FETCH:Fetch instruction 0xff810113 from address 20
+DECODE: Operation is ADDI, first operand R 2  , Second operand is Immediate field,destination register R 2
+DECODE: Read registers R 2  =  2147483632 , The immediate value is  4088
+Executed
+Number of clock cycles: 4
+FETCH:Fetch instruction 0x00112223 from address 24
+DECODE: Operation is SW, first operand R 2  , Second operand is Immediate field, destination register R 1
+DECODE: Read registers R 2  =  2147483624 , The immediate value is  4
+Executed
+Number of clock cycles: 5
+FETCH:Fetch instruction 0x00a12023 from address 28
+DECODE: Operation is SW, first operand R 2  , Second operand is Immediate field, destination register R 10
+DECODE: Read registers R 2  =  2147483624 , The immediate value is  0
+Executed
+Number of clock cycles: 6
+FETCH:Fetch instruction 0xfff50293 from address 32
+DECODE: Operation is ADDI, first operand R 10  , Second operand is Immediate field,destination register R 5
+DECODE: Read registers R 10  =  3 , The immediate value is  4095
+Executed
+Number of clock cycles: 7
+FETCH:Fetch instruction 0x0002d863 from address 36
+DECODE: Operation is BGE, first operand R 5  ,  second operand R 0
+DECODE: Read registers R 5  =  2 , Second register R 0  =  0
+Executed
+Number of clock cycles: 8
+FETCH:Fetch instruction 0xfff50513 from address 52
+DECODE: Operation is ADDI, first operand R 10  , Second operand is Immediate field,destination register R 10
+DECODE: Read registers R 10  =  3 , The immediate value is  4095
+Executed
+Number of clock cycles: 9
+FETCH:Fetch instruction 0xfddff0ef from address 56
+DECODE: Operation is JAL,the first operand is Immediate field, destination register R 1
+DECODE: The immediate value is 1048541
+Executed
+Number of clock cycles: 10
+FETCH:Fetch instruction 0xff810113 from address 20
+DECODE: Operation is ADDI, first operand R 2  , Second operand is Immediate field,destination register R 2
+DECODE: Read registers R 2  =  2147483624 , The immediate value is  4088
+Executed
+Number of clock cycles: 11
+FETCH:Fetch instruction 0x00112223 from address 24
+DECODE: Operation is SW, first operand R 2  , Second operand is Immediate field, destination register R 1
+DECODE: Read registers R 2  =  2147483616 , The immediate value is  4
+Executed
+Number of clock cycles: 12
+FETCH:Fetch instruction 0x00a12023 from address 28
+DECODE: Operation is SW, first operand R 2  , Second operand is Immediate field, destination register R 10
+DECODE: Read registers R 2  =  2147483616 , The immediate value is  0
+Executed
+Number of clock cycles: 13
+FETCH:Fetch instruction 0xfff50293 from address 32
+DECODE: Operation is ADDI, first operand R 10  , Second operand is Immediate field,destination register R 5
+DECODE: Read registers R 10  =  2 , The immediate value is  4095
+Executed
+Number of clock cycles: 14
+FETCH:Fetch instruction 0x0002d863 from address 36
+DECODE: Operation is BGE, first operand R 5  ,  second operand R 0
+DECODE: Read registers R 5  =  1 , Second register R 0  =  0
+Executed
+Number of clock cycles: 15
+FETCH:Fetch instruction 0xfff50513 from address 52
+DECODE: Operation is ADDI, first operand R 10  , Second operand is Immediate field,destination register R 10
+DECODE: Read registers R 10  =  2 , The immediate value is  4095
+Executed
+Number of clock cycles: 16
+FETCH:Fetch instruction 0xfddff0ef from address 56
+DECODE: Operation is JAL,the first operand is Immediate field, destination register R 1
+DECODE: The immediate value is 1048541
+Executed
+Number of clock cycles: 17
+FETCH:Fetch instruction 0xff810113 from address 20
+DECODE: Operation is ADDI, first operand R 2  , Second operand is Immediate field,destination register R 2
+DECODE: Read registers R 2  =  2147483616 , The immediate value is  4088
+Executed
+Number of clock cycles: 18
+FETCH:Fetch instruction 0x00112223 from address 24
+DECODE: Operation is SW, first operand R 2  , Second operand is Immediate field, destination register R 1
+DECODE: Read registers R 2  =  2147483608 , The immediate value is  4
+Executed
+Number of clock cycles: 19
+FETCH:Fetch instruction 0x00a12023 from address 28
+DECODE: Operation is SW, first operand R 2  , Second operand is Immediate field, destination register R 10
+DECODE: Read registers R 2  =  2147483608 , The immediate value is  0
+Executed
+Number of clock cycles: 20
+FETCH:Fetch instruction 0xfff50293 from address 32
+DECODE: Operation is ADDI, first operand R 10  , Second operand is Immediate field,destination register R 5
+DECODE: Read registers R 10  =  1 , The immediate value is  4095
+Executed
+Number of clock cycles: 21
+FETCH:Fetch instruction 0x0002d863 from address 36
+DECODE: Operation is BGE, first operand R 5  ,  second operand R 0
+DECODE: Read registers R 5  =  0 , Second register R 0  =  0
+Executed
+Number of clock cycles: 22
+FETCH:Fetch instruction 0xfff50513 from address 52
+DECODE: Operation is ADDI, first operand R 10  , Second operand is Immediate field,destination register R 10
+DECODE: Read registers R 10  =  1 , The immediate value is  4095
+Executed
+Number of clock cycles: 23
+FETCH:Fetch instruction 0xfddff0ef from address 56
+DECODE: Operation is JAL,the first operand is Immediate field, destination register R 1
+DECODE: The immediate value is 1048541
+Executed
+Number of clock cycles: 24
+FETCH:Fetch instruction 0xff810113 from address 20
+DECODE: Operation is ADDI, first operand R 2  , Second operand is Immediate field,destination register R 2
+DECODE: Read registers R 2  =  2147483608 , The immediate value is  4088
+Executed
+Number of clock cycles: 25
+FETCH:Fetch instruction 0x00112223 from address 24
+DECODE: Operation is SW, first operand R 2  , Second operand is Immediate field, destination register R 1
+DECODE: Read registers R 2  =  2147483600 , The immediate value is  4
+Executed
+Number of clock cycles: 26
+FETCH:Fetch instruction 0x00a12023 from address 28
+DECODE: Operation is SW, first operand R 2  , Second operand is Immediate field, destination register R 10
+DECODE: Read registers R 2  =  2147483600 , The immediate value is  0
+Executed
+Number of clock cycles: 27
+FETCH:Fetch instruction 0xfff50293 from address 32
+DECODE: Operation is ADDI, first operand R 10  , Second operand is Immediate field,destination register R 5
+DECODE: Read registers R 10  =  0 , The immediate value is  4095
+Executed
+Number of clock cycles: 28
+FETCH:Fetch instruction 0x0002d863 from address 36
+DECODE: Operation is BGE, first operand R 5  ,  second operand R 0
+DECODE: Read registers R 5  =  -1 , Second register R 0  =  0
+Executed
+Number of clock cycles: 29
+FETCH:Fetch instruction 0x00100513 from address 40
+DECODE: Operation is ADDI, first operand R 0  , Second operand is Immediate field,destination register R 10
+DECODE: Read registers R 0  =  0 , The immediate value is  1
+Executed
+Number of clock cycles: 30
+FETCH:Fetch instruction 0x00810113 from address 44
+DECODE: Operation is ADDI, first operand R 2  , Second operand is Immediate field,destination register R 2
+DECODE: Read registers R 2  =  2147483600 , The immediate value is  8
+Executed
+Number of clock cycles: 31
+FETCH:Fetch instruction 0x00008067 from address 48
+DECODE: Operation is JALR, first operand R 1  , Second operand is Immediate field, destination register R 0
+DECODE: Read registers R 1  =  60 , The immediate value is  0
+Executed
+Number of clock cycles: 32
+FETCH:Fetch instruction 0x00050313 from address 60
+DECODE: Operation is ADDI, first operand R 10  , Second operand is Immediate field,destination register R 6
+DECODE: Read registers R 10  =  1 , The immediate value is  0
+Executed
+Number of clock cycles: 33
+FETCH:Fetch instruction 0x00012503 from address 64
+DECODE: Operation is LW, first operand R 2  , Second operand is Immediate field, destination register R 10
+DECODE: Read registers R 2  =  2147483608 , The immediate value is  0
+Executed
+Number of clock cycles: 34
+FETCH:Fetch instruction 0x00412083 from address 68
+DECODE: Operation is LW, first operand R 2  , Second operand is Immediate field, destination register R 1
+DECODE: Read registers R 2  =  2147483608 , The immediate value is  4
+Executed
+Number of clock cycles: 35
+FETCH:Fetch instruction 0x02650533 from address 72
+DECODE: Operation is MUL, first operand R 10  , Second operand R 6 , destination register R 10
+DECODE: Read registers R 10  =  1 , R 6  =  1
+Executed
+Number of clock cycles: 36
+FETCH:Fetch instruction 0x00810113 from address 76
+DECODE: Operation is ADDI, first operand R 2  , Second operand is Immediate field,destination register R 2
+DECODE: Read registers R 2  =  2147483608 , The immediate value is  8
+Executed
+Number of clock cycles: 37
+FETCH:Fetch instruction 0x00008067 from address 80
+DECODE: Operation is JALR, first operand R 1  , Second operand is Immediate field, destination register R 0
+DECODE: Read registers R 1  =  60 , The immediate value is  0
+Executed
+Number of clock cycles: 38
+FETCH:Fetch instruction 0x00050313 from address 60
+DECODE: Operation is ADDI, first operand R 10  , Second operand is Immediate field,destination register R 6
+DECODE: Read registers R 10  =  1 , The immediate value is  0
+Executed
+Number of clock cycles: 39
+FETCH:Fetch instruction 0x00012503 from address 64
+DECODE: Operation is LW, first operand R 2  , Second operand is Immediate field, destination register R 10
+DECODE: Read registers R 2  =  2147483616 , The immediate value is  0
+Executed
+Number of clock cycles: 40
+FETCH:Fetch instruction 0x00412083 from address 68
+DECODE: Operation is LW, first operand R 2  , Second operand is Immediate field, destination register R 1
+DECODE: Read registers R 2  =  2147483616 , The immediate value is  4
+Executed
+Number of clock cycles: 41
+FETCH:Fetch instruction 0x02650533 from address 72
+DECODE: Operation is MUL, first operand R 10  , Second operand R 6 , destination register R 10
+DECODE: Read registers R 10  =  2 , R 6  =  1
+Executed
+Number of clock cycles: 42
+FETCH:Fetch instruction 0x00810113 from address 76
+DECODE: Operation is ADDI, first operand R 2  , Second operand is Immediate field,destination register R 2
+DECODE: Read registers R 2  =  2147483616 , The immediate value is  8
+Executed
+Number of clock cycles: 43
+FETCH:Fetch instruction 0x00008067 from address 80
+DECODE: Operation is JALR, first operand R 1  , Second operand is Immediate field, destination register R 0
+DECODE: Read registers R 1  =  60 , The immediate value is  0
+Executed
+Number of clock cycles: 44
+FETCH:Fetch instruction 0x00050313 from address 60
+DECODE: Operation is ADDI, first operand R 10  , Second operand is Immediate field,destination register R 6
+DECODE: Read registers R 10  =  2 , The immediate value is  0
+Executed
+Number of clock cycles: 45
+FETCH:Fetch instruction 0x00012503 from address 64
+DECODE: Operation is LW, first operand R 2  , Second operand is Immediate field, destination register R 10
+DECODE: Read registers R 2  =  2147483624 , The immediate value is  0
+Executed
+Number of clock cycles: 46
+FETCH:Fetch instruction 0x00412083 from address 68
+DECODE: Operation is LW, first operand R 2  , Second operand is Immediate field, destination register R 1
+DECODE: Read registers R 2  =  2147483624 , The immediate value is  4
+Executed
+Number of clock cycles: 47
+FETCH:Fetch instruction 0x02650533 from address 72
+DECODE: Operation is MUL, first operand R 10  , Second operand R 6 , destination register R 10
+DECODE: Read registers R 10  =  3 , R 6  =  2
+Executed
+Number of clock cycles: 48
+FETCH:Fetch instruction 0x00810113 from address 76
+DECODE: Operation is ADDI, first operand R 2  , Second operand is Immediate field,destination register R 2
+DECODE: Read registers R 2  =  2147483624 , The immediate value is  8
+Executed
+Number of clock cycles: 49
+FETCH:Fetch instruction 0x00008067 from address 80
+DECODE: Operation is JALR, first operand R 1  , Second operand is Immediate field, destination register R 0
+DECODE: Read registers R 1  =  12 , The immediate value is  0
+Executed
+Number of clock cycles: 50
+FETCH:Fetch instruction 0x3e800413 from address 12
+DECODE: Operation is ADDI, first operand R 0  , Second operand is Immediate field,destination register R 8
+DECODE: Read registers R 0  =  0 , The immediate value is  1000
+Executed
+Number of clock cycles: 51
+FETCH:Fetch instruction 0x04000263 from address 16
+DECODE: Operation is BEQ, first operand R 0  ,  second operand R 0
+DECODE: Read registers R 0  =  0 , Second register R 0  =  0
+Executed
+Number of clock cycles: 52
+############## Code Exited with NO ERROR #################
+------------------Registers------------------------------
+
+
+x0:0
+x1:12
+x2:2147483632
+x3:268435456
+x4:0
+x5:-1
+x6:2
+x7:0
+x8:1000
+x9:0
+x10:6
+x11:0
+x12:0
+x13:0
+x14:0
+x15:0
+x16:0
+x17:0
+x18:0
+x19:0
+x20:0
+x21:0
+x22:0
+x23:0
+x24:0
+x25:0
+x26:0
+x27:0
+x28:0
+x29:0
+x30:0
+x31:0
+
+
+--------------------Memory-------------------------------
+
+
+0x10000000 :00000011
+
+0x10000001 :00000000
+
+0x10000002 :00000000
+
+0x10000003 :00000000
+
+0x7fffffec :00001100
+
+0x7fffffed :00000000
+
+0x7fffffee :00000000
+
+0x7fffffef :00000000
+
+0x7fffffe8 :00000011
+
+0x7fffffe9 :00000000
+
+0x7fffffea :00000000
+
+0x7fffffeb :00000000
+
+0x7fffffe4 :00111100
+
+0x7fffffe5 :00000000
+
+0x7fffffe6 :00000000
+
+0x7fffffe7 :00000000
+
+0x7fffffe0 :00000010
+
+0x7fffffe1 :00000000
+
+0x7fffffe2 :00000000
+
+0x7fffffe3 :00000000
+
+0x7fffffdc :00111100
+
+0x7fffffdd :00000000
+
+0x7fffffde :00000000
+
+0x7fffffdf :00000000
+
+0x7fffffd8 :00000001
+
+0x7fffffd9 :00000000
+
+0x7fffffda :00000000
+
+0x7fffffdb :00000000
+
+0x7fffffd4 :00111100
+
+0x7fffffd5 :00000000
+
+0x7fffffd6 :00000000
+
+0x7fffffd7 :00000000
+
+0x7fffffd0 :00000000
+
+0x7fffffd1 :00000000
+
+0x7fffffd2 :00000000
+
+0x7fffffd3 :00000000
+
