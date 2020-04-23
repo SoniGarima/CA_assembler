@@ -19,132 +19,144 @@ class pipelining:
         self.IR=0
         self.PC_temp=self.PC
         self.clock=0 
-        Cycles = 0
-        IF = '';
-        ID = {};
-        IE = {};
-        IM = [];  
+        self.Cycles = 0
+        self.IF = '';
+        self.ID = {};
+        self.IE = {};
+        self.IM = [];  
     
     def pipeline(self):
         while(self.PC in pc_dict):
             if(self.Cycles == 0):
-                fetch(pc_dict[self.PC])
+                self.fetch(pc_dict[self.PC])
                 self.Cycles+=1
             if(self.Cycles == 1):
-                ID = decode(self.IF)
-                fetch(pc_dict[self.PC])
+                print("-----------------------------------------------------------------------")
+                self.ID = self.decode(self.IF)
+                self.fetch(pc_dict[self.PC])
                 self.Cycles+=1
             if(self.Cycles == 2):
-                if(ID['Format']=='R'):
-                    IE = executeR(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2])
-                if(ID['Format'] == 'I'):
-                    IE = executeI(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2])   
-                if(ID['Format'] == 'IL'):
-                    IE = executeIL(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2]) 
-                if(ID['Format'] == 'IJ'):
-                    IE = executeIJ(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2]) 
-                if(ID['Format'] == 'IS'):
-                    IE = executeIS(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2])   
-                if(ID['Format'] == 'SB'):
-                    IE = executeSB(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2]) 
-                if(ID['Format'] == 'U'):
-                    IE = executeU(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2]) 
-                if(ID['Format'] == 'UJ'):
-                    IE = executeUj(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2])                 
-                ID = decode(self.IF)
-                fetch(pc_dict[self.PC])
+                print("-----------------------------------------------------------------------")
+                if(self.ID['Format']=='R'):
+                    self.IE = self.executeR(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2])
+                if(self.ID['Format'] == 'I'):
+                    self.IE = self.executeI(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2])   
+                if(self.ID['Format'] == 'IL'):
+                    self.IE = self.executeIL(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2]) 
+                if(self.ID['Format'] == 'IJ'):
+                    self.IE = self.executeIJ(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2]) 
+                if(self.ID['Format'] == 'IS'):
+                    self.IE = self.executeIS(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2])   
+                if(self.ID['Format'] == 'SB'):
+                    self.IE = self.executeSB(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2]) 
+                if(self.ID['Format'] == 'U'):
+                    self.IE = self.executeU(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1]) 
+                    print(self.IE)
+                if(self.ID['Format'] == 'UJ'):
+                    self.IE = self.executeUj(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1])  
+            
+                self.ID = self.decode(self.IF)
+                self.fetch(pc_dict[self.PC])
                 self.Cycles+=1
             if(self.Cycles == 3):
-                IM = IE['RegUpdate']
-                if(IE['MemWrite'][0]):
-                    if(IE['MemWrite'][1]=='w'):
-                        if(IE['MemWrite'][4]=='byte'):
-                            my_mem.write_byte(IE['MemWrite'][2],IE['MemWrite'][3])
-                        if(IE['MemWrite'][4]=='word'):
-                            my_mem.write_word(IE['MemWrite'][2],IE['MemWrite'][3])
-                        if(IE['MemWrite'][4]=='half'):
-                            my_mem.write_half(IE['MemWrite'][2],IE['MemWrite'][3])
+                print("-----------------------------------------------------------------------")
+                print(self.IE)
+                self.IM = self.IE['RegUpdate']
+                if(self.IE['MemWrite'][0]):
+                    if(self.IE['MemWrite'][1]=='w'):
+                        if(self.IE['MemWrite'][4]=='byte'):
+                            my_mem.write_byte(self.IE['MemWrite'][2],self.IE['MemWrite'][3])
+                        if(self.IE['MemWrite'][4]=='word'):
+                            my_mem.write_word(self.IE['MemWrite'][2],self.IE['MemWrite'][3])
+                        if(self.IE['MemWrite'][4]=='half'):
+                            my_mem.write_half(self.IE['MemWrite'][2],self.IE['MemWrite'][3])
                     else:
-                        if(IE['MemWrite'][3]=='byte'):
-                            retu = my_mem.ret_byte(IE['MemWrite'][2])
-                            IM[2] = int(retu,2)
-                        if(IE['MemWrite'][3]=='word'):
-                            retu = my_mem.ret_word(IE['MemWrite'][2])
-                            IM[2] = int(retu,2)
-                        if(IE['MemWrite'][3]=='half'):
-                            retu = my_mem.ret_half(IE['MemWrite'][2])
-                            IM[2] = int(retu,2)
+                        if(self.IE['MemWrite'][3]=='byte'):
+                            retu = my_mem.ret_byte(self.IE['MemWrite'][2])
+                            self.IM[2] = int(retu,2)
+                        if(self.IE['MemWrite'][3]=='word'):
+                            retu = my_mem.ret_word(self.IE['MemWrite'][2])
+                            self.IM[2] = int(retu,2)
+                        if(self.IE['MemWrite'][3]=='half'):
+                            retu = my_mem.ret_half(self.IE['MemWrite'][2])
+                            self.IM[2] = int(retu,2)
+                        print("MEMORY ACCESSED")
                         
                         
-                if(ID['Format']=='R'):
-                    IE = executeR(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2])
-                if(ID['Format'] == 'I'):
-                    IE = executeI(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2])   
-                if(ID['Format'] == 'IL'):
-                    IE = executeIL(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2]) 
-                if(ID['Format'] == 'IJ'):
-                    IE = executeIJ(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2]) 
-                if(ID['Format'] == 'IS'):
-                    IE = executeIS(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2])   
-                if(ID['Format'] == 'SB'):
-                    IE = executeSB(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2]) 
-                if(ID['Format'] == 'U'):
-                    IE = executeU(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2]) 
-                if(ID['Format'] == 'UJ'):
-                    IE = executeUj(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2])                 
-                ID = decode(self.IF)
-                fetch(pc_dict[self.PC])
+                if(self.ID['Format']=='R'):
+                    self.IE = self.executeR(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2])
+                if(self.ID['Format'] == 'I'):
+                    self.IE = self.executeI(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2])   
+                if(self.ID['Format'] == 'IL'):
+                    self.IE = self.executeIL(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2]) 
+                if(self.ID['Format'] == 'IJ'):
+                    self.IE = self.executeIJ(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2]) 
+                if(self.ID['Format'] == 'IS'):
+                    self.IE = self.executeIS(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2])   
+                if(self.ID['Format'] == 'SB'):
+                    self.IE = self.executeSB(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2]) 
+                if(self.ID['Format'] == 'U'):
+                    self.IE = self.executeU(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1]) 
+                    print(self.IE)
+                if(self.ID['Format'] == 'UJ'):
+                    self.IE = self.executeUj(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1])  
+                self.ID = self.decode(self.IF)
+                self.fetch(pc_dict[self.PC])
                 self.Cycles+=1
             if(self.Cycles >= 4):
-                if(IM[0]):
-                    my_reg.write_reg(IM[1],IM[2])
-                IM = IE['RegUpdate']
-                if(IE['MemWrite'][0]):
-                    if(IE['MemWrite'][1]=='w'):
-                        if(IE['MemWrite'][4]=='byte'):
-                            my_mem.write_byte(IE['MemWrite'][2],IE['MemWrite'][3])
-                        if(IE['MemWrite'][4]=='word'):
-                            my_mem.write_word(IE['MemWrite'][2],IE['MemWrite'][3])
-                        if(IE['MemWrite'][4]=='half'):
-                            my_mem.write_half(IE['MemWrite'][2],IE['MemWrite'][3])
+                print("-----------------------------------------------------------------------")
+                if(self.IM[0]):
+                    my_reg.write_reg(self.IM[1],self.IM[2])
+                print("REGISTER UPDATED")
+                self.IM = self.IE['RegUpdate']
+                if(self.IE['MemWrite'][0]):
+                    if(self.IE['MemWrite'][1]=='w'):
+                        if(self.IE['MemWrite'][4]=='byte'):
+                            my_mem.write_byte(self.IE['MemWrite'][2],self.IE['MemWrite'][3])
+                        if(self.IE['MemWrite'][4]=='word'):
+                            my_mem.write_word(self.IE['MemWrite'][2],self.IE['MemWrite'][3])
+                        if(self.IE['MemWrite'][4]=='half'):
+                            my_mem.write_half(self.IE['MemWrite'][2],self.IE['MemWrite'][3])
                     else:
-                        if(IE['MemWrite'][3]=='byte'):
-                            retu = my_mem.ret_byte(IE['MemWrite'][2])
-                            IM[2] = int(retu,2)
-                        if(IE['MemWrite'][3]=='word'):
-                            retu = my_mem.ret_word(IE['MemWrite'][2])
-                            IM[2] = int(retu,2)
-                        if(IE['MemWrite'][3]=='half'):
-                            retu = my_mem.ret_half(IE['MemWrite'][2])
-                            IM[2] = int(retu,2)
+                        if(self.IE['MemWrite'][3]=='byte'):
+                            retu = my_mem.ret_byte(self.IE['MemWrite'][2])
+                            self.IM[2] = int(retu,2)
+                        if(self.IE['MemWrite'][3]=='word'):
+                            retu = my_mem.ret_word(self.IE['MemWrite'][2])
+                            self.IM.append(int(retu,2))
+                        if(self.IE['MemWrite'][3]=='half'):
+                            retu = my_mem.ret_half(self.IE['MemWrite'][2])
+                            self.IM[2] = int(retu,2)
+                    print("MEMORY ACCESSED")
                         
-                if(ID['Format']=='R'):
-                    IE = executeR(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2])
-                if(ID['Format'] == 'I'):
-                    IE = executeI(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2])   
-                if(ID['Format'] == 'IL'):
-                    IE = executeIL(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2]) 
-                if(ID['Format'] == 'IJ'):
-                    IE = executeIJ(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2]) 
-                if(ID['Format'] == 'IS'):
-                    IE = executeIS(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2])   
-                if(ID['Format'] == 'SB'):
-                    IE = executeSB(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2]) 
-                if(ID['Format'] == 'U'):
-                    IE = executeU(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2]) 
-                if(ID['Format'] == 'UJ'):
-                    IE = executeUj(ID['Instruction'],ID['operands'][0],ID['operands'][1],ID['operands'][2])                 
-                ID = decode(self.IF)
-                fetch(pc_dict[self.PC])
-                self.Cycles+=1    
-                    
+                        
+                if(self.ID['Format']=='R'):
+                    self.IE = self.executeR(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2])
+                if(self.ID['Format'] == 'I'):
+                    self.IE = self.executeI(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2])   
+                if(self.ID['Format'] == 'IL'):
+                    self.IE = self.executeIL(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2]) 
+                if(self.ID['Format'] == 'IJ'):
+                    self.IE = self.executeIJ(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2]) 
+                if(self.ID['Format'] == 'IS'):
+                    self.IE = self.executeIS(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2])   
+                if(self.ID['Format'] == 'SB'):
+                    self.IE = self.executeSB(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2]) 
+                if(self.ID['Format'] == 'U'):
+                    self.IE = self.executeU(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1]) 
+                    print(self.IE)
+                if(self.ID['Format'] == 'UJ'):
+                    self.IE = self.executeUj(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1])  
+                self.ID = self.decode(self.IF)
+                self.fetch(pc_dict[self.PC])
+                self.Cycles+=1
                     
                 
     def fetch(self,mc_code):
         self.IF=mc_code
         self.PC_temp=self.PC
         self.PC+=4
-        print("FETCH:Fetch instruction "+self.IR+" from address "+str(self.PC-4))
+        print("FETCH:Fetch instruction "+self.IF+" from address "+str(self.PC-4))
     
     def decode(self,Ins):
         out={}
@@ -390,9 +402,10 @@ class pipelining:
             val=int(im,2) 
         out['MemWrite']= [False]
         out['RegUpdate']=[True]
-        out['RegUpdate'].append([int(r,2),self.PC])
+        out['RegUpdate']+=[int(r,2),self.PC]
         self.PC=self.PC_temp+val 
-        print("Executed")          
+        print("EXECUTED")
+        return out        
                 
     def executeR(self,func,r1,r2,r3):
         out={}
@@ -401,22 +414,26 @@ class pipelining:
         if(func=="ADD"):
             num1=my_reg.regVal(int(r1,2))
             num2=my_reg.regVal(int(r2,2))
-            out['RegUpdate'].append([int(r3,2),num1+num2])
+            out['RegUpdate']+=[int(r3,2),num1+num2]
+            print("EXECUTED")
             return out
         if(func=="SUB"):
             num1=my_reg.regVal(int(r1,2))
             num2=my_reg.regVal(int(r2,2))
-            out['RegUpdate'].append([int(r3,2),num1-num2])
+            out['RegUpdate']+=[int(r3,2),num1-num2]
+            print("EXECUTED")
             return out
         if(func=="MUL"):
             num1=my_reg.regVal(int(r1,2))
             num2=my_reg.regVal(int(r2,2))
-            out['RegUpdate'].append([int(r3,2),num1*num2])
+            out['RegUpdate']+=[int(r3,2),num1*num2]
+            print("EXECUTED")
             return out
         if(func=="DIV"):
             num1=my_reg.regVal(int(r1,2))
             num2=my_reg.regVal(int(r2,2))
-            out['RegUpdate'].append([int(r3,2),num1/num2])
+            out['RegUpdate']+=[int(r3,2),num1/num2]
+            print("EXECUTED")
             return out
         if(func=="SRA"):
             num1=my_reg.regVal(int(r1,2))
@@ -425,46 +442,55 @@ class pipelining:
             my_msb=xx[31]
             aa=str(num1>>num2)
             aa[0:num2]=my_msb
-            out['RegUpdate'].append([int(r3,2),int(aa,2)])
+            out['RegUpdate']+=[int(r3,2),int(aa,2)]
+            print("EXECUTED")
             return out
         if(func=="SRL"):
             num1=my_reg.regVal(int(r1,2))
             num2=my_reg.regVal(int(r2,2))
-            out['RegUpdate'].append([int(r3,2),num1>>num2])
+            out['RegUpdate']+=[int(r3,2),num1>>num2]
+            print("EXECUTED")
             return out
         if(func=="AND"):
             num1=my_reg.regVal(int(r1,2))
             num2=my_reg.regVal(int(r2,2))
-            out['RegUpdate'].append([int(r3,2),num1&num2])
+            out['RegUpdate']+=[int(r3,2),num1&num2]
+            print("EXECUTED")
             return out    
         if(func=="XOR"):
             num1=my_reg.regVal(int(r1,2))
             num2=my_reg.regVal(int(r2,2))
-            out['RegUpdate'].append([int(r3,2),num1^num2])
+            out['RegUpdate']+=[int(r3,2),num1^num2]
+            print("EXECUTED")
             return out  
         if(func=="REM"):
             num1=my_reg.regVal(int(r1,2))
             num2=my_reg.regVal(int(r2,2))
-            out['RegUpdate'].append([int(r3,2),num1%num2])
+            out['RegUpdate']+=[int(r3,2),num1%num2]
+            print("EXECUTED")
             return out  
         if(func=="SLT"):
             num1=my_reg.regVal(int(r1,2))
             num2=my_reg.regVal(int(r2,2))
             if(num1>num2):
-                out['RegUpdate'].append([int(r3,2),0])
+                out['RegUpdate']+=[int(r3,2),0]
+                print("EXECUTED")
                 return out  
             else:
-                out['RegUpdate'].append([int(r3,2),1])
+                out['RegUpdate']+=[int(r3,2),1]
+                print("EXECUTED")
                 return out            
         if(func=="SLL"):
             num1=my_reg.regVal(int(r1,2))
             num2=my_reg.regVal(int(r2,2))
-            out['RegUpdate'].append([int(r3,2),num1<<num2])
+            out['RegUpdate']+=[int(r3,2),num1<<num2]
+            print("EXECUTED")
             return out  
         if(func=="OR"):
             num1=my_reg.regVal(int(r1,2))
             num2=my_reg.regVal(int(r2,2))
-            out['RegUpdate'].append([int(r3,2),num1|num2])
+            out['RegUpdate']+=[int(r3,2),num1|num2]
+            print("EXECUTED")
             return out                                   
 
     def executeI(self,func,r1,r2,r3):
@@ -476,20 +502,21 @@ class pipelining:
             num2=int(r2,2)
             if(r2[0]=='1'):
                 num2=-2**12+num2
-            out['RegUpdate'].append([int(r3,2),num1+num2])
+            out['RegUpdate']+=[int(r3,2),num1+num2]
         if(func=="ANDI"):
             num1=my_reg.regVal(int(r1,2))
             num2=int(r2,2)
             if(r2[0]=='1'):
                 num2=-2**12+num2
-            out['RegUpdate'].append([int(r3,2),num1&num2])
+            out['RegUpdate']+=[int(r3,2),num1&num2]
         if(func=="ORI"):
             num1=my_reg.regVal(int(r1,2))
             num2=int(r2,2)
             if(r2[0]=='1'):
                 num2=-2**12+num2
-            out['RegUpdate'].append([int(r3,2),num1|num2])
-        print("Executed")      
+            out['RegUpdate']+=[int(r3,2),num1|num2]
+        print("EXECUTED")
+        return out     
     
     def executeU(self,func,im,r):
         out={}
@@ -498,13 +525,14 @@ class pipelining:
         if(func=="LUI"):
             im=im+"000000000000"
             im=int(im,2)
-            out['RegUpdate'].append([int(r,2),im])
+            out['RegUpdate']+=[int(r,2),im]
         else:
             im=im+"000000000000"
             im=int(im,2)
             im=im+self.PC_temp
-            out['RegUpdate'].append([int(r,2),im]) 
-        print("Executed")                                                         
+            out['RegUpdate']+=[int(r,2),im]
+        print("EXECUTED")
+        return out                                                     
 
     def executeIS(self,func,r1,r2,r3):
         out={}
@@ -515,12 +543,13 @@ class pipelining:
         else:    
             eff_address=my_reg.regVal(int(r1,2))+int(r2,2)
         if(func=="SB"):
-            out['MemWrite'].append(['w',eff_address,my_reg.regVal(int(r3,2)),'byte'])
+            out['MemWrite']+=['w',eff_address,my_reg.regVal(int(r3,2)),'byte']
         elif(func=="SH"):
-            out['MemWrite'].append(['w',eff_address,my_reg.regVal(int(r3,2)),'half'])
+            out['MemWrite']+=['w',eff_address,my_reg.regVal(int(r3,2)),'half']
         elif(func=="SW"):
-            out['MemWrite'].append(['w',eff_address,my_reg.regVal(int(r3,2)),'word'])
-        print("Executed")      
+            out['MemWrite']+=['w',eff_address,my_reg.regVal(int(r3,2)),'word']
+        print("EXECUTED")
+        return out    
 
     def executeSB(self,func,r1,r2,r3):
         out={}
@@ -541,8 +570,9 @@ class pipelining:
                 self.PC=self.PC_temp+val
         elif(func=="BGE"):
             if(my_reg.regVal(int(r1,2))>=my_reg.regVal(int(r3,2))):
-                self.PC=self.PC_temp+val   
-        print("Executed")            
+                self.PC=self.PC_temp+val 
+        print("EXECUTED")
+        return out           
 
     def executeIL(self,func,r1,r2,r3):
         out={}
@@ -553,18 +583,19 @@ class pipelining:
         else:    
             eff_address=my_reg.regVal(int(r1,2))+int(r2,2)
         if(func=="LB"):
-            out['MemWrite'].append(['r',eff_address,'byte'])
-            out['RegUpdate'].append([int(r3,2)])
+            out['MemWrite']+=['r',eff_address,'byte']
+            out['RegUpdate']+=[int(r3,2)]
         if(func=="LH"):
-            out['MemWrite'].append(['r',eff_address,'half'])
-            out['RegUpdate'].append([int(r3,2)])
+            out['MemWrite']+=['r',eff_address,'half']
+            out['RegUpdate']+=[int(r3,2)]
         if(func=="LW"):
-            out['MemWrite'].append(['r',eff_address,'word'])
-            out['RegUpdate'].append([int(r3,2)])
-        print("Executed")  
+            out['MemWrite']+=['r',eff_address,'word']
+            out['RegUpdate']+=[int(r3,2)]
+        print("EXECUTED")
+        return out  
 
 
-    def executeIJ(self,r1,r2,r3):
+    def executeIJ(self,func,r1,r2,r3):
         out={}
         out['MemWrite'] = [False]
         out['RegUpdate'] = [True]
@@ -572,10 +603,13 @@ class pipelining:
             eff_address=my_reg.regVal(int(r1,2))-2**12+int(r2,2)
         else:    
             eff_address=my_reg.regVal(int(r1,2))+int(r2,2)  
-        out['RegUpdate'].append([int(r3,2),self.PC])     
+        out['RegUpdate'].append(int(r3,2))  
+        out['RegUpdate'].append(self.PC)     
         self.PC=eff_address
-        print("Executed")  
-        
+        print("EXECUTED")
+        return out  
+my_pipeline = pipelining()
+my_pipeline.pipeline()    
                     
                 
             
