@@ -150,7 +150,127 @@ class pipelining:
                 self.ID = self.decode(self.IF)
                 self.fetch(pc_dict[self.PC])
                 self.Cycles+=1
-                    
+        
+        print("-----------------------------------------------------------------------")
+        if(self.IM[0]):
+            my_reg.write_reg(self.IM[1],self.IM[2])
+        print("REGISTER UPDATED")
+        self.IM = self.IE['RegUpdate']
+        if(self.IE['MemWrite'][0]):
+            if(self.IE['MemWrite'][1]=='w'):
+                if(self.IE['MemWrite'][4]=='byte'):
+                    my_mem.write_byte(self.IE['MemWrite'][2],self.IE['MemWrite'][3])
+                if(self.IE['MemWrite'][4]=='word'):
+                    my_mem.write_word(self.IE['MemWrite'][2],self.IE['MemWrite'][3])
+                if(self.IE['MemWrite'][4]=='half'):
+                    my_mem.write_half(self.IE['MemWrite'][2],self.IE['MemWrite'][3])
+            else:
+                if(self.IE['MemWrite'][3]=='byte'):
+                    retu = my_mem.ret_byte(self.IE['MemWrite'][2])
+                    self.IM[2] = int(retu,2)
+                if(self.IE['MemWrite'][3]=='word'):
+                    retu = my_mem.ret_word(self.IE['MemWrite'][2])
+                    self.IM.append(int(retu,2))
+                if(self.IE['MemWrite'][3]=='half'):
+                    retu = my_mem.ret_half(self.IE['MemWrite'][2])
+                    self.IM[2] = int(retu,2)
+            print("MEMORY ACCESSED")
+                
+                
+        if(self.ID['Format']=='R'):
+            self.IE = self.executeR(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2])
+        if(self.ID['Format'] == 'I'):
+            self.IE = self.executeI(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2])   
+        if(self.ID['Format'] == 'IL'):
+            self.IE = self.executeIL(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2]) 
+        if(self.ID['Format'] == 'IJ'):
+            self.IE = self.executeIJ(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2]) 
+        if(self.ID['Format'] == 'IS'):
+            self.IE = self.executeIS(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2])   
+        if(self.ID['Format'] == 'SB'):
+            self.IE = self.executeSB(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2]) 
+        if(self.ID['Format'] == 'U'):
+            self.IE = self.executeU(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1]) 
+            print(self.IE)
+        if(self.ID['Format'] == 'UJ'):
+            self.IE = self.executeUj(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1])  
+        self.ID = self.decode(self.IF)
+        self.Cycles+=1
+        print("-----------------------------------------------------------------------")
+        if(self.IM[0]):
+            my_reg.write_reg(self.IM[1],self.IM[2])
+        print("REGISTER UPDATED")
+        self.IM = self.IE['RegUpdate']
+        if(self.IE['MemWrite'][0]):
+            if(self.IE['MemWrite'][1]=='w'):
+                if(self.IE['MemWrite'][4]=='byte'):
+                    my_mem.write_byte(self.IE['MemWrite'][2],self.IE['MemWrite'][3])
+                if(self.IE['MemWrite'][4]=='word'):
+                    my_mem.write_word(self.IE['MemWrite'][2],self.IE['MemWrite'][3])
+                if(self.IE['MemWrite'][4]=='half'):
+                    my_mem.write_half(self.IE['MemWrite'][2],self.IE['MemWrite'][3])
+            else:
+                if(self.IE['MemWrite'][3]=='byte'):
+                    retu = my_mem.ret_byte(self.IE['MemWrite'][2])
+                    self.IM[2] = int(retu,2)
+                if(self.IE['MemWrite'][3]=='word'):
+                    retu = my_mem.ret_word(self.IE['MemWrite'][2])
+                    self.IM.append(int(retu,2))
+                if(self.IE['MemWrite'][3]=='half'):
+                    retu = my_mem.ret_half(self.IE['MemWrite'][2])
+                    self.IM[2] = int(retu,2)
+            print("MEMORY ACCESSED")
+                
+                
+        if(self.ID['Format']=='R'):
+            self.IE = self.executeR(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2])
+        if(self.ID['Format'] == 'I'):
+            self.IE = self.executeI(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2])   
+        if(self.ID['Format'] == 'IL'):
+            self.IE = self.executeIL(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2]) 
+        if(self.ID['Format'] == 'IJ'):
+            self.IE = self.executeIJ(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2]) 
+        if(self.ID['Format'] == 'IS'):
+            self.IE = self.executeIS(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2])   
+        if(self.ID['Format'] == 'SB'):
+            self.IE = self.executeSB(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1],self.ID['operands'][2]) 
+        if(self.ID['Format'] == 'U'):
+            self.IE = self.executeU(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1]) 
+            print(self.IE)
+        if(self.ID['Format'] == 'UJ'):
+            self.IE = self.executeUj(self.ID['Instruction'],self.ID['operands'][0],self.ID['operands'][1])  
+        self.Cycles+=1
+        
+        print("-----------------------------------------------------------------------")
+        if(self.IM[0]):
+            my_reg.write_reg(self.IM[1],self.IM[2])
+        print("REGISTER UPDATED")
+        self.IM = self.IE['RegUpdate']
+        if(self.IE['MemWrite'][0]):
+            if(self.IE['MemWrite'][1]=='w'):
+                if(self.IE['MemWrite'][4]=='byte'):
+                    my_mem.write_byte(self.IE['MemWrite'][2],self.IE['MemWrite'][3])
+                if(self.IE['MemWrite'][4]=='word'):
+                    my_mem.write_word(self.IE['MemWrite'][2],self.IE['MemWrite'][3])
+                if(self.IE['MemWrite'][4]=='half'):
+                    my_mem.write_half(self.IE['MemWrite'][2],self.IE['MemWrite'][3])
+            else:
+                if(self.IE['MemWrite'][3]=='byte'):
+                    retu = my_mem.ret_byte(self.IE['MemWrite'][2])
+                    self.IM[2] = int(retu,2)
+                if(self.IE['MemWrite'][3]=='word'):
+                    retu = my_mem.ret_word(self.IE['MemWrite'][2])
+                    self.IM.append(int(retu,2))
+                if(self.IE['MemWrite'][3]=='half'):
+                    retu = my_mem.ret_half(self.IE['MemWrite'][2])
+                    self.IM[2] = int(retu,2)
+            print("MEMORY ACCESSED")
+        self.Cycles+=1
+        print("-----------------------------------------------------------------------")
+        if(self.IM[0]):
+            my_reg.write_reg(self.IM[1],self.IM[2])
+        print("REGISTER UPDATED")
+        self.Cycles+=1   
                 
     def fetch(self,mc_code):
         self.IF=mc_code
@@ -609,8 +729,19 @@ class pipelining:
         print("EXECUTED")
         return out  
 my_pipeline = pipelining()
-my_pipeline.pipeline()    
-                    
+my_pipeline.pipeline()  
+print("--------------------------------------------------------------")
+print("NO. of Cycles: ",my_pipeline.Cycles)  
+print("------------------Registers------------------------------\n\n")
+mr=my_reg.ret_reg()
+for i in range(0,32):
+    print("x"+str(i)+":"+str(mr[i]))
+print("\n")
+pr=my_mem.returnAll()
+print("--------------------Memory-------------------------------\n\n")
+for key in pr:
+    print(hex(key),":"+pr[key]+"\n")
+        
                 
             
     
