@@ -219,9 +219,9 @@ class pipelining:
             print("MEMORY ACCESSED")
                 
         for op in self.ID['operands'][:len(self.ID['operands'])-1]:
-            if (op == self.data[len(self.data)-2]):
+            if (len(self.data)>2 and op == self.data[len(self.data)-2]):
                 self.stall_one = True
-            elif(op == self.data[len(self.data)-3]):
+            elif(len(self.data)>3 and op == self.data[len(self.data)-3]):
                 self.stall_two = True  
         if(self.stall_one or self.stall_two):
             self.Cycles+=1
@@ -281,9 +281,9 @@ class pipelining:
             print("MEMORY ACCESSED")
                 
         for op in self.ID['operands'][:len(self.ID['operands'])-1]:
-            if (op == self.data[len(self.data)-2]):
+            if (len(self.data)>2 and op == self.data[len(self.data)-2]):
                 self.stall_one = True
-            elif(op == self.data[len(self.data)-3]):
+            elif(len(self.data)>3 and op == self.data[len(self.data)-3]):
                 self.stall_two = True  
         
         if(self.stall_one or self.stall_two):
@@ -809,6 +809,9 @@ my_pipeline = pipelining()
 while(1):
     my_pipeline.pipeline() 
     if(my_pipeline.stall_one or my_pipeline.stall_two):
+        my_pipeline.stall_one = False
+        my_pipeline.stall_two = False
+        my_pipeline.data = []
         my_pipeline.Cycles = 2
     else:
         break
