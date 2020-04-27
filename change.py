@@ -563,22 +563,7 @@ class pipelining:
                 print("DECODE: Operation is BGE, first operand R",int(rs1,2), " ,  second operand R",int(rs2,2))
                 print("DECODE: Read registers R",int(rs1,2)," = ",my_reg.regVal(int(rs1,2)),", Second register R",int(rs2,2)," = ",my_reg.regVal(int(rs2,2)))
                 out['Instruction'] = 'BGE'
-            if(imm[0]=='1'):
-                val=-2**12+int(imm,2)-1
-            else:
-                val=int(imm,2)    
-            if(fun3=="000"):
-                if(my_reg.regVal(int(rs1,2))==my_reg.regVal(int(rs2,2))):
-                    self.PC=self.PC_temp+val
-            elif(fun3=="001"):
-                if(my_reg.regVal(int(rs1,2))!=my_reg.regVal(int(rs2,2))):
-                    self.PC=self.PC_temp+val
-            elif(fun3=="100"):
-                if(my_reg.regVal(int(rs1,2))<my_reg.regVal(int(rs2,2))):
-                    self.PC=self.PC_temp+val
-            elif(fun3=="101"):
-                if(my_reg.regVal(int(rs1,2))>=my_reg.regVal(int(rs2,2))):
-                    self.PC=self.PC_temp+val 
+            
         
         elif(opcode=="0010111" or opcode=="0110111"):
             rd=curr_bin_ins[20:25]
@@ -778,22 +763,22 @@ class pipelining:
         out={}
         out['MemWrite'] = [False]
         out['RegUpdate'] = [False]
-        # if(r2[0]=='1'):
-        #     val=-2**12+int(r2,2)-1
-        # else:
-        #     val=int(r2,2)    
-        # if(func=="BEQ"):
-        #     if(my_reg.regVal(int(r1,2))==my_reg.regVal(int(r3,2))):
-        #         self.PC=self.PC_temp+val
-        # elif(func=="BNE"):
-        #     if(my_reg.regVal(int(r1,2))!=my_reg.regVal(int(r3,2))):
-        #         self.PC=self.PC_temp+val
-        # elif(func=="BLT"):
-        #     if(my_reg.regVal(int(r1,2))<my_reg.regVal(int(r3,2))):
-        #         self.PC=self.PC_temp+val
-        # elif(func=="BGE"):
-        #     if(my_reg.regVal(int(r1,2))>=my_reg.regVal(int(r3,2))):
-        #         self.PC=self.PC_temp+val 
+        if(r2[0]=='1'):
+            val=-2**12+int(r2,2)-1
+        else:
+            val=int(r2,2)    
+        if(func=="BEQ"):
+            if(my_reg.regVal(int(r1,2))==my_reg.regVal(int(r3,2))):
+                self.PC=self.PC_temp+val
+        elif(func=="BNE"):
+            if(my_reg.regVal(int(r1,2))!=my_reg.regVal(int(r3,2))):
+                self.PC=self.PC_temp+val
+        elif(func=="BLT"):
+            if(my_reg.regVal(int(r1,2))<my_reg.regVal(int(r3,2))):
+                self.PC=self.PC_temp+val
+        elif(func=="BGE"):
+            if(my_reg.regVal(int(r1,2))>=my_reg.regVal(int(r3,2))):
+                self.PC=self.PC_temp+val 
         print("EXECUTED")
         return out           
 
