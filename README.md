@@ -8,7 +8,6 @@ S format - sb, sw, sd, sh
 SB format - beq, bne, bge, blt
 U format - auipc, lui
 UJ format - jal
-Our ASSEMBLER supports 64-bit too.
 It supports the following assembler directives:
 .text, .data, .byte, .half, .word, .dword, .asciiz.
 
